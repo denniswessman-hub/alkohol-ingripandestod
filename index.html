@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b1120">
+<title>Alkohol – Ingripandestöd · Kronobergs län</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html, body {
+    background:#060a14;
+    font-family:'Inter','SF Pro Display',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    color:#eef2f8;
+  }
+  body {
+    min-height:100vh;
+    background:radial-gradient(1200px 600px at 50% -10%, #1e3a5f 0%, #0b1120 55%, #060a14 100%);
+    background-attachment:fixed;
+  }
+  #app { max-width:480px; margin:0 auto; padding:0 0 48px; }
+
+  @keyframes slideUp { from { opacity:0; transform:translateY(16px);} to { opacity:1; transform:translateY(0);} }
+  @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(239,68,68,0.4);} 50% { box-shadow:0 0 0 9px rgba(239,68,68,0);} }
+
+  .header {
+    position:sticky; top:0; z-index:20;
+    background:#0b1120;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    padding:14px 18px 12px;
+  }
+  .header-row { display:flex; align-items:center; gap:12px; }
+  .logo {
+    width:40px; height:40px; border-radius:12px;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+    box-shadow:0 4px 14px rgba(37,99,235,0.45);
+  }
+  .title { font-weight:800; font-size:14.5px; letter-spacing:0.02em; }
+  .subtitle { font-size:11px; color:#7da3d8; font-weight:500; }
+  .btn-new {
+    background:rgba(59,130,246,0.16); border:1px solid rgba(59,130,246,0.4);
+    color:#93c5fd; border-radius:10px; padding:7px 14px;
+    font-size:12px; cursor:pointer; font-weight:700; font-family:inherit;
+  }
+
+  .progress { display:flex; gap:5px; margin-top:13px; }
+  .progress-step { flex:1; }
+  .progress-bar { height:4px; border-radius:99px; background:rgba(255,255,255,0.1); transition:background 0.4s; }
+  .progress-bar.done { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
+  .progress-bar.active { background:rgba(96,165,250,0.55); }
+  .progress-bar.result-done { background:linear-gradient(90deg,#22c55e,#4ade80); }
+  .progress-label { font-size:9px; margin-top:4px; text-align:center; color:#3b4a63; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; }
+  .progress-label.lit { color:#7da3d8; }
+  .progress-label.result-lit { color:#86efac; }
+
+  .chips { padding:12px 18px 0; display:flex; flex-wrap:wrap; gap:7px; }
+  .chip {
+    background:rgba(59,130,246,0.13); border:1px solid rgba(59,130,246,0.3);
+    color:#9cc3f5; font-size:11.5px; padding:4px 12px; border-radius:99px; font-weight:600;
+  }
+
+  .content { padding:14px 18px 0; }
+
+  .back-btn {
+    background:none; border:none; color:#60a5fa; font-size:14px;
+    cursor:pointer; padding:2px 0 12px; font-weight:650; font-family:inherit;
+    display:flex; align-items:center; gap:5px;
+  }
+
+  h2 { font-size:24px; font-weight:850; margin:6px 0 5px; letter-spacing:-0.02em; }
+  .question-sub { color:#8da4c4; font-size:13.5px; margin-bottom:22px; }
+
+  .choice {
+    display:flex; align-items:center; gap:14px; width:100%; text-align:left;
+    background:#161f33; border:1px solid rgba(255,255,255,0.1);
+    border-radius:18px; padding:17px 18px; margin-bottom:12px; cursor:pointer;
+    color:#fff; box-shadow:0 4px 18px rgba(0,0,0,0.35);
+    transition:all 0.12s ease; font-family:inherit;
+    animation:slideUp 0.4s ease both;
+  }
+  .choice:active { transform:scale(0.98); background:#1c2740; }
+  .choice-badge {
+    width:44px; height:44px; border-radius:13px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; font-weight:900; color:#fff;
+  }
+  .choice-label { font-size:16.5px; font-weight:750; line-height:1.25; }
+  .choice-sub { font-size:12.5px; opacity:0.6; margin-top:3px; }
+
+  .banner {
+    border-radius:22px; padding:18px 20px; margin-bottom:20px;
+    display:flex; align-items:center; gap:15px;
+    animation:slideUp 0.35s ease both;
+  }
+  .banner.crime { background:#2a1416; border:1.5px solid rgba(239,68,68,0.6); animation:pulse 2.4s ease infinite, slideUp 0.35s ease both; }
+  .banner.ok { background:#0f2418; border:1.5px solid rgba(34,197,94,0.55); }
+  .banner-icon {
+    width:54px; height:54px; border-radius:16px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+  }
+  .banner-icon.crime { background:linear-gradient(135deg,#dc2626,#991b1b); box-shadow:0 6px 20px rgba(220,38,38,0.5); }
+  .banner-icon.ok { background:linear-gradient(135deg,#22c55e,#15803d); box-shadow:0 6px 20px rgba(34,197,94,0.45); }
+  .banner-title { font-weight:900; font-size:19px; letter-spacing:-0.01em; }
+  .banner-meta { font-size:11.5px; opacity:0.72; margin-top:4px; line-height:1.55; }
+
+  .cat-card { margin-bottom:16px; border-radius:20px; overflow:hidden; background:#141c2e; animation:slideUp 0.45s ease both; }
+  .cat-head { padding:11px 18px; display:flex; align-items:center; gap:10px; }
+  .cat-icon { font-size:17px; }
+  .cat-label { font-weight:800; letter-spacing:0.14em; font-size:12px; color:#fff; }
+  .cat-count { margin-left:auto; background:rgba(255,255,255,0.22); border-radius:99px; font-size:11px; font-weight:800; color:#fff; padding:2px 10px; }
+  .cat-body { padding:12px; display:flex; flex-direction:column; gap:10px; }
+  .cat-item {
+    background:rgba(0,0,0,0.32); border-radius:14px; padding:13px 15px;
+    font-size:13.5px; line-height:1.6; white-space:pre-line; color:#e8edf5;
+    border:1px solid rgba(255,255,255,0.06);
+  }
+
+  .note {
+    background:#141c2e; border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px; padding:15px 17px; font-size:13px; color:#9db1cc;
+    margin-bottom:16px; line-height:1.65;
+  }
+  .note strong { color:#e2e8f0; }
+
+  .btn-reset {
+    display:flex; align-items:center; justify-content:center; gap:9px; width:100%;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    border:none; color:#fff; font-weight:800; font-size:16px;
+    padding:17px; border-radius:18px; cursor:pointer; margin-top:4px;
+    letter-spacing:0.02em; box-shadow:0 8px 26px rgba(37,99,235,0.45); font-family:inherit;
+  }
+
+  .legend { margin-top:40px; }
+  .legend-title { font-size:10.5px; color:#3e4f6d; text-transform:uppercase; letter-spacing:0.14em; margin-bottom:10px; font-weight:700; }
+  .legend-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .legend-item {
+    background:#141c2e; border-radius:13px; padding:10px 13px;
+    display:flex; align-items:center; gap:9px;
+  }
+  .legend-icon { font-size:14px; }
+  .legend-label { font-size:11.5px; font-weight:800; letter-spacing:0.08em; color:#dbe5f1; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+"use strict";
+
+const CATS = {
+  brott:     { grad:"linear-gradient(135deg,#dc2626,#991b1b)", glow:"rgba(239,68,68,0.28)",  border:"rgba(239,68,68,0.45)", icon:"\u{1F6A8}", label:"BROTT" },
+  fraga:     { grad:"linear-gradient(135deg,#f59e0b,#b45309)", glow:"rgba(245,158,11,0.22)", border:"rgba(245,158,11,0.45)", icon:"\u2753",   label:"FR\u00C5GA" },
+  attGora:   { grad:"linear-gradient(135deg,#22c55e,#15803d)", glow:"rgba(34,197,94,0.22)",  border:"rgba(34,197,94,0.45)", icon:"\u2705",   label:"ATT G\u00D6RA" },
+  attSkriva: { grad:"linear-gradient(135deg,#3b82f6,#1d4ed8)", glow:"rgba(59,130,246,0.22)", border:"rgba(59,130,246,0.45)", icon:"\u270F\uFE0F", label:"ATT SKRIVA" },
+};
+
+const AL = {
+  age:               { under15:"Under 15 \u00E5r", "15to19":"15\u201319 \u00E5r", "20plus":"20+ \u00E5r" },
+  forbidden_area:    { ja:"F\u00F6rbjudet omr\u00E5de", nej:"Ej f\u00F6rbjudet omr\u00E5de" },
+  observed_drinking: { ja:"Iakttagit drickande", nej:"Ej iakttagit" },
+  suspects:          { ja:"Misst\u00E4nkta finns", nej:"Inga misst\u00E4nkta" },
+};
+
+const STEP_TITLES = { age:"\u00C5lder", forbidden_area:"Omr\u00E5de", observed_drinking:"Iakttagelse", suspects:"Misst\u00E4nkta", result:"Resultat" };
+const ORDER = ["age","forbidden_area","observed_drinking","suspects"];
+
+let state = { step:"age", ans:{}, hist:[] };
+
+function stepsForAge(a){
+  return a==="20plus" ? ["age","forbidden_area","observed_drinking"]
+                      : ["age","forbidden_area","observed_drinking","suspects"];
+}
+
+function advance(key, val){
+  const na = Object.assign({}, state.ans, { [key]: val });
+  let next = "result";
+  if (key==="age")               next = "forbidden_area";
+  if (key==="forbidden_area")    next = "observed_drinking";
+  if (key==="observed_drinking") next = (na.age==="15to19" || na.age==="under15") ? "suspects" : "result";
+  if (key==="suspects")          next = "result";
+  state.hist.push(state.step);
+  state.ans = na;
+  state.step = next;
+  render();
+}
+
+function back(){
+  if (!state.hist.length) return;
+  const prev = state.hist.pop();
+  const idx = ORDER.indexOf(prev);
+  ORDER.slice(idx+1).forEach(k => { delete state.ans[k]; });
+  state.step = prev;
+  render();
+}
+
+function reset(){ state = { step:"age", ans:{}, hist:[] }; render(); }
+
+function buildResults(){
+  const { age, forbidden_area:fa, observed_drinking:od, suspects } = state.ans;
+  const r = { brott:[], fraga:[], attGora:[], attSkriva:[] };
+  const localCrime = fa==="ja" && od==="ja";
+
+  if (age==="under15"){
+    r.brott.push("Brott mot alkohollagen \u2013 av den som f\u00F6rsett barnet\nOlaglig alkoholf\u00F6rs\u00E4ljning\nalt. Olovligt anskaffande av alkoholdrycker\n\n\u26A0\uFE0F Barnet under 15 \u00E5r \u00E4r under straffbar \u00E5lder\n\u2013 brottsrubricering riktas mot den som tillhandah\u00E5llit alkoholen, INTE barnet");
+    r.fraga.push("Fr\u00E5ga vem han/hon fick alkoholen ifr\u00E5n\n\u2192 Avg\u00F6rande f\u00F6r att kunna utreda langning/\n   olovlig f\u00F6rs\u00E4ljning");
+    r.attGora.push("Inled f\u00F6runders\u00F6kning (FU)\nom langning/olaglig alkoholf\u00F6rs\u00E4ljning");
+    if (suspects==="ja"){
+      r.attGora.push("Alkohol tas i beslag\n\u2192 Till\u00E4mpa normal rutin f\u00F6r beslag\n(misst\u00E4nkta langare finns \u2013 alkoholen\nbeh\u00F6vs som bevisning)");
+    } else {
+      r.attGora.push("Direktf\u00F6rverka alkoholen p\u00E5 plats\n\u{1F4CB} Lag (1958:205) om f\u00F6rverkande av\nalkoholhaltiga drycker, 1\u00A7");
+    }
+    r.attGora.push("Kontakta v\u00E5rdnadshavare omedelbart");
+    r.attSkriva.push("Anm\u00E4lan: 'Olaglig alkoholf\u00F6rs\u00E4ljning'\n\n\u2022 Fritext: tid, plats, typ av alkohol,\n  om f\u00F6r\u00E4ldrar informerades,\n  om alkoholen f\u00F6rverkades\n  (inget p-nr i fritexten)\n\u2022 Vittne: barnet med alkoholen\n\u2022 Anm\u00E4lare: Polismyndigheten\n  i Kronobergs l\u00E4n\n\u2022 Misst\u00E4nkt: om det finns\n\u2022 Brottsrubricering: 5047- + 'langning'\n\u2022 Bifoga: f\u00F6rverkandeprotokoll\n  eller beslag");
+    if (localCrime){
+      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats\n(registreras ej mot barnet \u2013 under straffbar \u00E5lder)");
+      r.attSkriva.push("Dokumentera f\u00F6rverkandet i b\u00F6terblanketten:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+    }
+  }
+
+  if (age==="15to19"){
+    r.brott.push("Brott mot alkohollagen\nOlovligt anskaffande av alkoholdrycker\nalt. Olaglig alkoholf\u00F6rs\u00E4ljning\n(beroende p\u00E5 omst\u00E4ndigheterna)");
+    if (suspects==="ja"){
+      r.attGora.push("Alkohol tas i beslag\n\u2192 Till\u00E4mpa normal rutin f\u00F6r beslag\n(misst\u00E4nkta langare finns \u2013 alkoholen\nbeh\u00F6vs som bevisning)");
+    } else {
+      r.attGora.push("Direktf\u00F6rverka all alkohol p\u00E5 plats\n\u{1F4CB} Alkohollagen 12 kap. 1\u00A7");
+    }
+    r.fraga.push("Fr\u00E5ga vem han/hon fick alkoholen ifr\u00E5n\n\u2192 Avg\u00F6rande f\u00F6r om langning kan styrkas");
+    r.attGora.push("Inled f\u00F6runders\u00F6kning (FU)\nom langning");
+    r.attGora.push("Kontakta v\u00E5rdnadshavare\n(g\u00E4ller 15, 16 och 17-\u00E5ringar)");
+    r.attSkriva.push("\u{1F4CD} Inne p\u00E5 stationen:\nProtokollet \u2013 Beslut om f\u00F6rverkande\nenl. Lagen (1986:1009) om f\u00F6rfarandet i\nvissa fall vid f\u00F6rverkande\nS\u00F6k: 'f\u00F6rverkande' i formul\u00E4rportalen");
+    r.attSkriva.push("Anm\u00E4lan: 'Olaglig alkoholf\u00F6rs\u00E4ljning'\n\n\u2022 Fritext: tid, plats, typ av alkohol,\n  om f\u00F6r\u00E4ldrar informerades,\n  om alkoholen f\u00F6rverkades\n  (inget p-nr i fritexten)\n\u2022 Vittne: personen med alkoholen\n\u2022 Anm\u00E4lare: Polismyndigheten\n  i Kronobergs l\u00E4n\n\u2022 Misst\u00E4nkt: om det finns\n\u2022 Brottsrubricering: 5047- + 'langning'\n\u2022 Bifoga: f\u00F6rverkandeprotokoll\n  eller beslag");
+    r.attSkriva.push("Sidan 3 skickas hem:\n\u2022 Under 18 \u00E5r \u2192 till v\u00E5rdnadshavaren\n\u2022 18\u201319 \u00E5r \u2192 till personen sj\u00E4lv");
+    if (localCrime){
+      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
+      r.attSkriva.push("B\u00F6ter 941A \u2013 500 kr\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats\n\nDokumentera f\u00F6rverkandet i b\u00F6terblanketten:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+    }
+  }
+
+  if (age==="20plus"){
+    if (localCrime){
+      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
+      r.attSkriva.push("B\u00F6ter 941A \u2013 500 kr\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
+      r.attSkriva.push("Dokumentera f\u00F6rverkandet i b\u00F6terblanketten\nom alkoholen f\u00F6rverkas:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+    }
+  }
+
+  return r;
+}
+
+// ---- helpers ----
+function el(tag, attrs, children){
+  const node = document.createElement(tag);
+  if (attrs) for (const k in attrs){
+    if (k==="style") node.setAttribute("style", attrs[k]);
+    else if (k==="class") node.className = attrs[k];
+    else if (k==="onclick") node.addEventListener("click", attrs[k]);
+    else if (k==="text") node.textContent = attrs[k];
+    else node.setAttribute(k, attrs[k]);
+  }
+  if (children) children.forEach(c => { if (c) node.appendChild(c); });
+  return node;
+}
+
+function choiceBtn(label, sub, accent, badge, onClick, delay){
+  const btn = el("button", { class:"choice", onclick:onClick,
+    style:`border-left:4px solid ${accent}; animation-delay:${delay}s;` });
+  const b = el("div", { class:"choice-badge",
+    style:`background:linear-gradient(135deg, ${accent}, ${accent}99); box-shadow:0 4px 14px ${accent}55;`, text:badge });
+  const txt = el("div");
+  txt.appendChild(el("div", { class:"choice-label", text:label }));
+  if (sub) txt.appendChild(el("div", { class:"choice-sub", text:sub }));
+  btn.appendChild(b); btn.appendChild(txt);
+  return btn;
+}
+
+function catCard(cat, items, delay){
+  if (!items.length) return null;
+  const c = CATS[cat];
+  const card = el("div", { class:"cat-card", style:`border:1px solid ${c.border}; box-shadow:0 8px 28px ${c.glow}; animation-delay:${delay}s;` });
+  const head = el("div", { class:"cat-head", style:`background:${c.grad};` });
+  head.appendChild(el("span", { class:"cat-icon", text:c.icon }));
+  head.appendChild(el("span", { class:"cat-label", text:c.label }));
+  head.appendChild(el("span", { class:"cat-count", text:String(items.length) }));
+  card.appendChild(head);
+  const body = el("div", { class:"cat-body" });
+  items.forEach(it => body.appendChild(el("div", { class:"cat-item", text:it })));
+  card.appendChild(body);
+  return card;
+}
+
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+
+  // Header
+  const header = el("div", { class:"header" });
+  const row = el("div", { class:"header-row" });
+  row.appendChild(el("div", { class:"logo", text:"\u{1F693}" }));
+  const titleWrap = el("div", { style:"flex:1;" });
+  titleWrap.appendChild(el("div", { class:"title", text:"Alkohol \u00B7 Ingripandest\u00F6d" }));
+  titleWrap.appendChild(el("div", { class:"subtitle", text:"Kronobergs l\u00E4n \u00B7 Yttre tj\u00E4nst" }));
+  row.appendChild(titleWrap);
+  if (state.step!=="age") row.appendChild(el("button", { class:"btn-new", onclick:reset, text:"\u21BA Ny" }));
+  header.appendChild(row);
+
+  // Progress
+  const progSteps = state.ans.age ? stepsForAge(state.ans.age) : ORDER.slice(0,3);
+  const curIdx = state.step==="result" ? progSteps.length : progSteps.indexOf(state.step);
+  const prog = el("div", { class:"progress" });
+  progSteps.forEach((s,i) => {
+    const wrap = el("div", { class:"progress-step" });
+    let barCls = "progress-bar";
+    if (i < curIdx) barCls += " done";
+    else if (i===curIdx && state.step!=="result") barCls += " active";
+    wrap.appendChild(el("div", { class:barCls }));
+    wrap.appendChild(el("div", { class:"progress-label" + (i<=curIdx?" lit":""), text:STEP_TITLES[s] }));
+    prog.appendChild(wrap);
+  });
+  const resWrap = el("div", { class:"progress-step" });
+  resWrap.appendChild(el("div", { class:"progress-bar" + (state.step==="result"?" result-done":"") }));
+  resWrap.appendChild(el("div", { class:"progress-label" + (state.step==="result"?" result-lit":""), text:"Resultat" }));
+  prog.appendChild(resWrap);
+  header.appendChild(prog);
+  app.appendChild(header);
+
+  // Chips
+  const keys = Object.keys(state.ans);
+  if (keys.length){
+    const chips = el("div", { class:"chips" });
+    keys.forEach(k => chips.appendChild(el("span", { class:"chip", text:(AL[k] && AL[k][state.ans[k]]) || state.ans[k] })));
+    app.appendChild(chips);
+  }
+
+  const content = el("div", { class:"content" });
+
+  if (state.hist.length && state.step!=="result"){
+    content.appendChild(el("button", { class:"back-btn", onclick:back, text:"\u2190 Tillbaka" }));
+  }
+
+  if (state.step==="age"){
+    content.appendChild(el("h2", { text:"Personens \u00E5lder?" }));
+    content.appendChild(el("p", { class:"question-sub", text:"Polis tr\u00E4ffar n\u00E5gon som har alkohol med sig" }));
+    content.appendChild(choiceBtn("Under 15 \u00E5r","0\u201314 \u00E5r \u00B7 under straffbar \u00E5lder","#ef4444","<15",()=>advance("age","under15"),0.05));
+    content.appendChild(choiceBtn("15\u201319 \u00E5r","15, 16, 17, 18 eller 19 \u00E5r","#f59e0b","15+",()=>advance("age","15to19"),0.12));
+    content.appendChild(choiceBtn("20 \u00E5r eller \u00E4ldre","F\u00E5r lagligt inneha alkohol","#3b82f6","20+",()=>advance("age","20plus"),0.19));
+  }
+  else if (state.step==="forbidden_area"){
+    content.appendChild(el("h2", { text:"F\u00F6rbjudet omr\u00E5de?" }));
+    content.appendChild(el("p", { class:"question-sub", text:"Befinner sig personen inom omr\u00E5de som \u00E4r f\u00F6rbjudet enligt lokal ordningsf\u00F6reskrift?" }));
+    content.appendChild(choiceBtn("Ja \u2013 inom f\u00F6rbjudet omr\u00E5de",null,"#ef4444","\u2713",()=>advance("forbidden_area","ja"),0.05));
+    content.appendChild(choiceBtn("Nej \u2013 ej f\u00F6rbjudet omr\u00E5de",null,"#64748b","\u2717",()=>advance("forbidden_area","nej"),0.12));
+  }
+  else if (state.step==="observed_drinking"){
+    content.appendChild(el("h2", { text:"Iakttagit drickande?" }));
+    content.appendChild(el("p", { class:"question-sub", text:"Har du eller kollega direkt observerat att personen f\u00F6rt\u00E4rt alkohol?" }));
+    content.appendChild(choiceBtn("Ja \u2013 iakttagit drickande",null,"#ef4444","\u2713",()=>advance("observed_drinking","ja"),0.05));
+    content.appendChild(choiceBtn("Nej \u2013 ej iakttagit",null,"#64748b","\u2717",()=>advance("observed_drinking","nej"),0.12));
+  }
+  else if (state.step==="suspects"){
+    content.appendChild(el("h2", { text:"Misst\u00E4nkta langare?" }));
+    content.appendChild(el("p", { class:"question-sub", text:"Finns det misst\u00E4nkta personer som kan ha tillhandah\u00E5llit alkoholen? P\u00E5verkar hanteringen av alkoholen." }));
+    content.appendChild(choiceBtn("Ja \u2013 misst\u00E4nkta finns","\u2192 Alkohol tas i beslag enligt rutin","#ef4444","\u2713",()=>advance("suspects","ja"),0.05));
+    content.appendChild(choiceBtn("Nej \u2013 inga misst\u00E4nkta","\u2192 Direktf\u00F6rverkande p\u00E5 plats","#64748b","\u2717",()=>advance("suspects","nej"),0.12));
+  }
+  else if (state.step==="result"){
+    const res = buildResults();
+    const hasCrime = res.brott.length>0;
+
+    const banner = el("div", { class:"banner " + (hasCrime?"crime":"ok") });
+    banner.appendChild(el("div", { class:"banner-icon " + (hasCrime?"crime":"ok"), text: hasCrime?"\u26A0\uFE0F":"\u2705" }));
+    const bt = el("div");
+    bt.appendChild(el("div", { class:"banner-title", text: hasCrime?"BROTT KONSTATERAT":"INGET BROTT" }));
+    let meta = AL.age[state.ans.age] + " \u00B7 " + AL.forbidden_area[state.ans.forbidden_area] + " \u00B7 " + AL.observed_drinking[state.ans.observed_drinking];
+    if (state.ans.suspects) meta += " \u00B7 " + AL.suspects[state.ans.suspects];
+    bt.appendChild(el("div", { class:"banner-meta", text:meta }));
+    banner.appendChild(bt);
+    content.appendChild(banner);
+
+    const c1 = catCard("brott", res.brott, 0.08); if (c1) content.appendChild(c1);
+    const c2 = catCard("fraga", res.fraga, 0.16); if (c2) content.appendChild(c2);
+    const c3 = catCard("attGora", res.attGora, 0.24); if (c3) content.appendChild(c3);
+    const c4 = catCard("attSkriva", res.attSkriva, 0.32); if (c4) content.appendChild(c4);
+
+    if (!hasCrime && state.ans.age==="20plus"){
+      const n = el("div", { class:"note" });
+      n.innerHTML = "<strong>\u{1F4A1} Notera:</strong> Personen \u00E4r 20+ \u00E5r och inget brott f\u00F6religger. Alkoholen kan inte f\u00F6rverkas. Polisen kan informera om g\u00E4llande regler. G\u00F6r alltid en helhetsbed\u00F6mning av situationen.";
+      content.appendChild(n);
+    }
+    if (state.ans.age==="under15"){
+      const n = el("div", { class:"note" });
+      n.innerHTML = "<strong>\u{1F4A1} P\u00E5minnelse:</strong> Barnet under 15 \u00E5r \u00E4r under straffbar \u00E5lder och kan inte lagf\u00F6ras. Brottet riktas mot den som tillhandah\u00E5llit alkoholen. Utred alltid k\u00E4llan.";
+      content.appendChild(n);
+    }
+
+    content.appendChild(el("button", { class:"btn-reset", onclick:reset, text:"\u21BA Ny kontroll" }));
+  }
+
+  // Legend (not on result)
+  if (state.step!=="result"){
+    const legend = el("div", { class:"legend" });
+    legend.appendChild(el("div", { class:"legend-title", text:"F\u00E4rgkod i resultatet" }));
+    const grid = el("div", { class:"legend-grid" });
+    Object.keys(CATS).forEach(k => {
+      const v = CATS[k];
+      const item = el("div", { class:"legend-item", style:`border:1px solid ${v.border};` });
+      item.appendChild(el("span", { class:"legend-icon", text:v.icon }));
+      item.appendChild(el("span", { class:"legend-label", text:v.label }));
+      grid.appendChild(item);
+    });
+    legend.appendChild(grid);
+    content.appendChild(legend);
+  }
+
+  app.appendChild(content);
+}
+
+render();
+</script>
+</body>
+</html>
