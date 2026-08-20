@@ -2,417 +2,1196 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0b1120">
-<title>Alkohol – Ingripandestöd · Kronobergs län</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Beslutsstöd för yttre tjänst vid ingripanden där alkohol påträffas hos unga – med lagrum och dokumentationskrav.">
+<title>Alkohol – Ingripandestöd</title>
 <style>
-  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-  html, body {
-    background:#060a14;
-    font-family:'Inter','SF Pro Display',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-    color:#eef2f8;
-  }
-  body {
-    min-height:100vh;
-    background:radial-gradient(1200px 600px at 50% -10%, #1e3a5f 0%, #0b1120 55%, #060a14 100%);
-    background-attachment:fixed;
-  }
-  #app { max-width:480px; margin:0 auto; padding:0 0 48px; }
+:root{
+  color-scheme: light dark;
 
-  @keyframes slideUp { from { opacity:0; transform:translateY(16px);} to { opacity:1; transform:translateY(0);} }
-  @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(239,68,68,0.4);} 50% { box-shadow:0 0 0 9px rgba(239,68,68,0);} }
+  --bg:#f4f5f7;
+  --surface:#ffffff;
+  --surface-2:#f9fafb;
+  --surface-3:#eef0f4;
+  --line:#e2e5ea;
+  --line-strong:#cdd3dc;
 
-  .header {
-    position:sticky; top:0; z-index:20;
-    background:#0b1120;
-    border-bottom:1px solid rgba(255,255,255,0.07);
-    padding:14px 18px 12px;
-  }
-  .header-row { display:flex; align-items:center; gap:12px; }
-  .logo {
-    width:40px; height:40px; border-radius:12px;
-    background:linear-gradient(135deg,#2563eb,#1e40af);
-    display:flex; align-items:center; justify-content:center; font-size:20px;
-    box-shadow:0 4px 14px rgba(37,99,235,0.45);
-  }
-  .title { font-weight:800; font-size:14.5px; letter-spacing:0.02em; }
-  .subtitle { font-size:11px; color:#7da3d8; font-weight:500; }
-  .btn-new {
-    background:rgba(59,130,246,0.16); border:1px solid rgba(59,130,246,0.4);
-    color:#93c5fd; border-radius:10px; padding:7px 14px;
-    font-size:12px; cursor:pointer; font-weight:700; font-family:inherit;
-  }
+  --text:#14181f;
+  --text-2:#4b5563;
+  --text-3:#6b7280;
 
-  .progress { display:flex; gap:5px; margin-top:13px; }
-  .progress-step { flex:1; }
-  .progress-bar { height:4px; border-radius:99px; background:rgba(255,255,255,0.1); transition:background 0.4s; }
-  .progress-bar.done { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
-  .progress-bar.active { background:rgba(96,165,250,0.55); }
-  .progress-bar.result-done { background:linear-gradient(90deg,#22c55e,#4ade80); }
-  .progress-label { font-size:9px; margin-top:4px; text-align:center; color:#3b4a63; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; }
-  .progress-label.lit { color:#7da3d8; }
-  .progress-label.result-lit { color:#86efac; }
+  --accent:#1d4ed8;
+  --accent-weak:#e8eeff;
+  --accent-text:#1d4ed8;
 
-  .chips { padding:12px 18px 0; display:flex; flex-wrap:wrap; gap:7px; }
-  .chip {
-    background:rgba(59,130,246,0.13); border:1px solid rgba(59,130,246,0.3);
-    color:#9cc3f5; font-size:11.5px; padding:4px 12px; border-radius:99px; font-weight:600;
-  }
+  --red:#b91c1c;   --red-bg:#fef2f2;   --red-line:#fca5a5;
+  --amber:#a16207; --amber-bg:#fffbeb; --amber-line:#fcd34d;
+  --green:#15803d; --green-bg:#f0fdf4; --green-line:#86efac;
+  --blue:#1d4ed8;  --blue-bg:#eff6ff;  --blue-line:#93c5fd;
 
-  .content { padding:14px 18px 0; }
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.06);
+  --shadow-md:0 2px 4px rgba(16,24,40,.05), 0 8px 24px rgba(16,24,40,.08);
 
-  .back-btn {
-    background:none; border:none; color:#60a5fa; font-size:14px;
-    cursor:pointer; padding:2px 0 12px; font-weight:650; font-family:inherit;
-    display:flex; align-items:center; gap:5px;
-  }
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px;
+  --sp:16px;
+  --maxw:720px;
+}
 
-  h2 { font-size:24px; font-weight:850; margin:6px 0 5px; letter-spacing:-0.02em; }
-  .question-sub { color:#8da4c4; font-size:13.5px; margin-bottom:22px; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1117;
+    --surface:#161b22;
+    --surface-2:#1c2129;
+    --surface-3:#232a33;
+    --line:#2a313b;
+    --line-strong:#3a424e;
 
-  .choice {
-    display:flex; align-items:center; gap:14px; width:100%; text-align:left;
-    background:#161f33; border:1px solid rgba(255,255,255,0.1);
-    border-radius:18px; padding:17px 18px; margin-bottom:12px; cursor:pointer;
-    color:#fff; box-shadow:0 4px 18px rgba(0,0,0,0.35);
-    transition:all 0.12s ease; font-family:inherit;
-    animation:slideUp 0.4s ease both;
-  }
-  .choice:active { transform:scale(0.98); background:#1c2740; }
-  .choice-badge {
-    width:44px; height:44px; border-radius:13px; flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    font-size:18px; font-weight:900; color:#fff;
-  }
-  .choice-label { font-size:16.5px; font-weight:750; line-height:1.25; }
-  .choice-sub { font-size:12.5px; opacity:0.6; margin-top:3px; }
+    --text:#e8ecf1;
+    --text-2:#a8b3c1;
+    --text-3:#8b95a3;
 
-  .banner {
-    border-radius:22px; padding:18px 20px; margin-bottom:20px;
-    display:flex; align-items:center; gap:15px;
-    animation:slideUp 0.35s ease both;
-  }
-  .banner.crime { background:#2a1416; border:1.5px solid rgba(239,68,68,0.6); animation:pulse 2.4s ease infinite, slideUp 0.35s ease both; }
-  .banner.ok { background:#0f2418; border:1.5px solid rgba(34,197,94,0.55); }
-  .banner-icon {
-    width:54px; height:54px; border-radius:16px; flex-shrink:0;
-    display:flex; align-items:center; justify-content:center; font-size:26px;
-  }
-  .banner-icon.crime { background:linear-gradient(135deg,#dc2626,#991b1b); box-shadow:0 6px 20px rgba(220,38,38,0.5); }
-  .banner-icon.ok { background:linear-gradient(135deg,#22c55e,#15803d); box-shadow:0 6px 20px rgba(34,197,94,0.45); }
-  .banner-title { font-weight:900; font-size:19px; letter-spacing:-0.01em; }
-  .banner-meta { font-size:11.5px; opacity:0.72; margin-top:4px; line-height:1.55; }
+    --accent:#4f8cff;
+    --accent-weak:#16233c;
+    --accent-text:#8ab4ff;
 
-  .cat-card { margin-bottom:16px; border-radius:20px; overflow:hidden; background:#141c2e; animation:slideUp 0.45s ease both; }
-  .cat-head { padding:11px 18px; display:flex; align-items:center; gap:10px; }
-  .cat-icon { font-size:17px; }
-  .cat-label { font-weight:800; letter-spacing:0.14em; font-size:12px; color:#fff; }
-  .cat-count { margin-left:auto; background:rgba(255,255,255,0.22); border-radius:99px; font-size:11px; font-weight:800; color:#fff; padding:2px 10px; }
-  .cat-body { padding:12px; display:flex; flex-direction:column; gap:10px; }
-  .cat-item {
-    background:rgba(0,0,0,0.32); border-radius:14px; padding:13px 15px;
-    font-size:13.5px; line-height:1.6; white-space:pre-line; color:#e8edf5;
-    border:1px solid rgba(255,255,255,0.06);
-  }
+    --red:#f87171;   --red-bg:#2a1417;   --red-line:#7f2a2a;
+    --amber:#fbbf24; --amber-bg:#2a2010; --amber-line:#7c5a12;
+    --green:#4ade80; --green-bg:#0f2418; --green-line:#1e6b3c;
+    --blue:#7dabff;  --blue-bg:#12203a;  --blue-line:#2c4c86;
 
-  .note {
-    background:#141c2e; border:1px solid rgba(255,255,255,0.1);
-    border-radius:16px; padding:15px 17px; font-size:13px; color:#9db1cc;
-    margin-bottom:16px; line-height:1.65;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    --shadow-md:0 4px 20px rgba(0,0,0,.45);
   }
-  .note strong { color:#e2e8f0; }
+}
 
-  .btn-reset {
-    display:flex; align-items:center; justify-content:center; gap:9px; width:100%;
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    border:none; color:#fff; font-weight:800; font-size:16px;
-    padding:17px; border-radius:18px; cursor:pointer; margin-top:4px;
-    letter-spacing:0.02em; box-shadow:0 8px 26px rgba(37,99,235,0.45); font-family:inherit;
-  }
+:root[data-theme="dark"]{
+  --bg:#0d1117;
+  --surface:#161b22;
+  --surface-2:#1c2129;
+  --surface-3:#232a33;
+  --line:#2a313b;
+  --line-strong:#3a424e;
 
-  .legend { margin-top:40px; }
-  .legend-title { font-size:10.5px; color:#3e4f6d; text-transform:uppercase; letter-spacing:0.14em; margin-bottom:10px; font-weight:700; }
-  .legend-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-  .legend-item {
-    background:#141c2e; border-radius:13px; padding:10px 13px;
-    display:flex; align-items:center; gap:9px;
-  }
-  .legend-icon { font-size:14px; }
-  .legend-label { font-size:11.5px; font-weight:800; letter-spacing:0.08em; color:#dbe5f1; }
+  --text:#e8ecf1;
+  --text-2:#a8b3c1;
+  --text-3:#8b95a3;
+
+  --accent:#4f8cff;
+  --accent-weak:#16233c;
+  --accent-text:#8ab4ff;
+
+  --red:#f87171;   --red-bg:#2a1417;   --red-line:#7f2a2a;
+  --amber:#fbbf24; --amber-bg:#2a2010; --amber-line:#7c5a12;
+  --green:#4ade80; --green-bg:#0f2418; --green-line:#1e6b3c;
+  --blue:#7dabff;  --blue-bg:#12203a;  --blue-line:#2c4c86;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:0 4px 20px rgba(0,0,0,.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+*{margin:0;padding:0;}
+
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100dvh;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+a{color:var(--accent-text);}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--surface);padding:10px 16px;border-radius:0 0 var(--r-md) 0;
+}
+.skip:focus{left:0;}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--sp);}
+
+/* ---------- Header ---------- */
+.appbar{
+  position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:saturate(180%) blur(12px);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+  padding-top:env(safe-area-inset-top);
+}
+.appbar-row{display:flex;align-items:center;gap:12px;padding:10px 0;}
+.mark{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  background:linear-gradient(140deg,#2563eb,#1e3a8a);
+  color:#fff;display:grid;place-items:center;
+  box-shadow:0 2px 8px rgba(37,99,235,.35);
+}
+.mark svg{width:20px;height:20px;}
+.brand{flex:1;min-width:0;}
+.brand b,.brand span{
+  display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand b{font-size:15px;font-weight:650;letter-spacing:-.01em;line-height:1.2;}
+.brand span{font-size:12px;color:var(--text-3);}
+
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;flex:none;
+  display:grid;place-items:center;color:var(--text-2);
+  border:1px solid var(--line);background:var(--surface-2);
+}
+.icon-btn:hover{background:var(--surface-3);color:var(--text);}
+.icon-btn svg{width:18px;height:18px;}
+.icon-btn[aria-pressed="true"]{background:var(--accent-weak);color:var(--accent-text);border-color:var(--accent);}
+
+/* ---------- Progress ---------- */
+.steps{display:flex;gap:4px;padding-bottom:10px;}
+.step{flex:1;min-width:0;}
+.step-bar{height:3px;border-radius:99px;background:var(--line-strong);transition:background .35s ease;}
+.step.done .step-bar{background:var(--accent);}
+.step.now .step-bar{background:color-mix(in srgb, var(--accent) 55%, var(--line-strong));}
+.step.final.done .step-bar{background:var(--green);}
+.step-name{
+  font-size:9.5px;text-align:center;margin-top:5px;color:var(--text-3);
+  font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.step.done .step-name,.step.now .step-name{color:var(--text-2);}
+.step.final.done .step-name{color:var(--green);}
+
+/* ---------- Answer chips ---------- */
+.answers{display:flex;flex-wrap:wrap;gap:6px;padding-top:14px;}
+.tag{
+  font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;
+  background:var(--surface-3);color:var(--text-2);border:1px solid var(--line);
+}
+
+/* ---------- Question ---------- */
+main{padding:14px 0 40px;}
+
+.linkback{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--text-2);font-size:14px;font-weight:600;
+  padding:8px 0;margin-bottom:2px;
+}
+.linkback:hover{color:var(--text);}
+.linkback svg{width:15px;height:15px;}
+
+h1{font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.2;margin:4px 0 6px;}
+h2{font-size:15px;font-weight:650;letter-spacing:-.01em;}
+.lede{color:var(--text-2);font-size:14.5px;margin-bottom:20px;max-width:52ch;}
+
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:14px 16px;min-height:64px;
+  box-shadow:var(--shadow-sm);
+  transition:border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+}
+.opt:hover{border-color:var(--line-strong);box-shadow:var(--shadow-md);}
+.opt:active{transform:scale(.988);}
+.opt-key{
+  width:42px;height:42px;border-radius:12px;flex:none;
+  display:grid;place-items:center;font-size:13px;font-weight:700;letter-spacing:-.02em;
+}
+.opt-key.red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line);}
+.opt-key.amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line);}
+.opt-key.blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line);}
+.opt-key.green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line);}
+.opt-key.grey{background:var(--surface-3);color:var(--text-2);border:1px solid var(--line-strong);}
+.opt-body{flex:1;min-width:0;}
+.opt-title{font-size:16px;font-weight:650;letter-spacing:-.01em;}
+.opt-hint{font-size:13px;color:var(--text-3);margin-top:2px;}
+.opt-chevron{color:var(--text-3);flex:none;}
+.opt-chevron svg{width:16px;height:16px;display:block;}
+
+/* ---------- Verdict ---------- */
+.verdict{
+  display:flex;gap:14px;align-items:flex-start;
+  border-radius:var(--r-xl);padding:16px;margin-bottom:18px;border:1px solid;
+}
+.verdict.alert{background:var(--red-bg);border-color:var(--red-line);}
+.verdict.minor{background:var(--amber-bg);border-color:var(--amber-line);}
+.verdict.clear{background:var(--green-bg);border-color:var(--green-line);}
+.verdict-icon{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;}
+.verdict.alert .verdict-icon{background:var(--red);color:var(--red-bg);}
+.verdict.minor .verdict-icon{background:var(--amber);color:var(--amber-bg);}
+.verdict.clear .verdict-icon{background:var(--green);color:var(--green-bg);}
+.verdict-icon svg{width:22px;height:22px;}
+.verdict-title{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.25;}
+.verdict.alert .verdict-title{color:var(--red);}
+.verdict.minor .verdict-title{color:var(--amber);}
+.verdict.clear .verdict-title{color:var(--green);}
+.verdict-text{font-size:13.5px;color:var(--text-2);margin-top:5px;}
+
+/* ---------- Result sections ---------- */
+.section{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-xl);margin-bottom:14px;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.section-head{
+  display:flex;align-items:center;gap:9px;padding:12px 16px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+}
+.section-head svg{width:16px;height:16px;flex:none;}
+.section-head .label{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}
+.section-head .count{
+  margin-left:auto;font-size:11px;font-weight:700;
+  min-width:20px;height:20px;padding:0 6px;border-radius:99px;
+  display:grid;place-items:center;background:var(--surface-3);color:var(--text-2);
+}
+.section.red   .section-head{background:var(--red-bg);}   .section.red   .section-head .label,.section.red   .section-head svg{color:var(--red);}
+.section.amber .section-head{background:var(--amber-bg);} .section.amber .section-head .label,.section.amber .section-head svg{color:var(--amber);}
+.section.green .section-head{background:var(--green-bg);} .section.green .section-head .label,.section.green .section-head svg{color:var(--green);}
+.section.blue  .section-head{background:var(--blue-bg);}  .section.blue  .section-head .label,.section.blue  .section-head svg{color:var(--blue);}
+
+.items{display:flex;flex-direction:column;}
+.item{padding:14px 16px;border-top:1px solid var(--line);}
+.item:first-child{border-top:none;}
+.item-title{font-size:15px;font-weight:650;letter-spacing:-.01em;line-height:1.35;}
+.item-desc{font-size:14px;color:var(--text-2);margin-top:5px;}
+.item ul{margin:8px 0 0;padding-left:0;list-style:none;}
+.item li{
+  position:relative;padding-left:16px;font-size:14px;color:var(--text-2);
+  margin-top:5px;line-height:1.5;
+}
+.item li::before{
+  content:"";position:absolute;left:3px;top:.62em;
+  width:4px;height:4px;border-radius:99px;background:var(--line-strong);
+}
+.item.flag{background:var(--amber-bg);border-left:3px solid var(--amber);}
+.item.flag .item-title{color:var(--amber);}
+
+.laws{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.law{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px;font-weight:600;line-height:1.3;
+  padding:4px 9px 4px 7px;border-radius:7px;
+  background:var(--surface-3);border:1px solid var(--line);
+  color:var(--text-2);text-decoration:none;
+}
+.law:hover{border-color:var(--accent);color:var(--accent-text);}
+.law::before{content:"§";font-weight:700;color:var(--accent-text);}
+
+/* ---------- Notes / actions ---------- */
+.note{
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:var(--r-md);padding:13px 15px;font-size:13.5px;color:var(--text-2);
+  margin-bottom:14px;
+}
+.note b{color:var(--text);font-weight:650;}
+
+.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn{
+  flex:1 1 140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:50px;padding:0 18px;border-radius:var(--r-md);
+  font-size:15px;font-weight:650;letter-spacing:-.01em;
+  border:1px solid var(--line);background:var(--surface);
+  transition:background .15s ease,border-color .15s ease;
+}
+.btn svg{width:17px;height:17px;}
+.btn:hover{background:var(--surface-3);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.primary:hover{filter:brightness(1.08);}
+
+/* ---------- Reference / footer ---------- */
+.legend{margin-top:28px;}
+.legend-title,.foot-title{
+  font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:10px;
+}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;}
+.legend-item{
+  display:flex;align-items:center;gap:9px;padding:10px 12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+}
+.legend-item svg{width:15px;height:15px;flex:none;}
+.legend-item span{font-size:12px;font-weight:650;letter-spacing:.03em;}
+.legend-item .desc{display:block;font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;}
+
+.reflist{display:flex;flex-direction:column;gap:2px;}
+.refrow{
+  display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);
+  font-size:13.5px;text-decoration:none;color:var(--text);align-items:baseline;
+}
+.refrow:last-child{border-bottom:none;}
+.refrow:hover .refrow-name{color:var(--accent-text);}
+.refrow-sfs{
+  flex:none;width:88px;font-size:11.5px;font-weight:700;color:var(--text-3);
+  font-variant-numeric:tabular-nums;
+}
+.refrow-name{flex:1;}
+.refrow-note{display:block;font-size:12px;color:var(--text-3);margin-top:1px;}
+
+footer{
+  border-top:1px solid var(--line);margin-top:36px;padding:20px 0 32px;
+  font-size:12.5px;color:var(--text-3);line-height:1.6;
+}
+footer p+p{margin-top:8px;}
+footer b{color:var(--text-2);}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);
+  background:var(--text);color:var(--bg);
+  padding:11px 18px;border-radius:99px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-md);opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;z-index:60;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media (min-width:640px){
+  h1{font-size:30px;}
+  .steps{gap:6px;}
+  .step-name{font-size:10px;}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .enter{animation:enter .32s cubic-bezier(.2,.7,.3,1) both;}
+  @keyframes enter{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+}
+
+@media print{
+  .appbar,.actions,.legend,.linkback,.toast{display:none !important;}
+  body{background:#fff;color:#000;font-size:11pt;}
+  .section,.item,.verdict{break-inside:avoid;box-shadow:none;}
+  .law{border:1px solid #999;}
+  a{text-decoration:none;color:#000;}
+}
 </style>
 </head>
 <body>
-<div id="app"></div>
+<a class="skip" href="#main">Hoppa till innehåll</a>
+
+<div class="appbar">
+  <div class="wrap">
+    <div class="appbar-row">
+      <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.1 8 11 4.6-1.9 8-6 8-11V5l-8-3Z"/></svg></div>
+      <div class="brand">
+        <b>Alkohol · Ingripandestöd</b>
+        <span id="brandSub">Yttre tjänst · beslutsstöd</span>
+      </div>
+      <button class="icon-btn" id="btnRefs" type="button" aria-pressed="false" title="Lagrum och källor" aria-label="Lagrum och källor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+      </button>
+      <button class="icon-btn" id="btnTheme" type="button" title="Växla ljust/mörkt läge" aria-label="Växla ljust/mörkt läge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+    <div class="steps" id="steps" role="group" aria-label="Förlopp"></div>
+  </div>
+</div>
+
+<main id="main"><div class="wrap" id="view"></div></main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 
-const CATS = {
-  brott:     { grad:"linear-gradient(135deg,#dc2626,#991b1b)", glow:"rgba(239,68,68,0.28)",  border:"rgba(239,68,68,0.45)", icon:"\u{1F6A8}", label:"BROTT" },
-  fraga:     { grad:"linear-gradient(135deg,#f59e0b,#b45309)", glow:"rgba(245,158,11,0.22)", border:"rgba(245,158,11,0.45)", icon:"\u2753",   label:"FR\u00C5GA" },
-  attGora:   { grad:"linear-gradient(135deg,#22c55e,#15803d)", glow:"rgba(34,197,94,0.22)",  border:"rgba(34,197,94,0.45)", icon:"\u2705",   label:"ATT G\u00D6RA" },
-  attSkriva: { grad:"linear-gradient(135deg,#3b82f6,#1d4ed8)", glow:"rgba(59,130,246,0.22)", border:"rgba(59,130,246,0.45)", icon:"\u270F\uFE0F", label:"ATT SKRIVA" },
+/* ============================================================
+   Lagrum – varje referens pekar mot gällande författning.
+   Kontrollerad mot lagtext augusti 2026.
+   ============================================================ */
+const SFS = {
+  al:   "https://lagen.nu/2010:1622",
+  fva:  "https://lagen.nu/1958:205",
+  ffe:  "https://lagen.nu/2024:782",
+  ol:   "https://lagen.nu/1993:1617",
+  brb:  "https://lagen.nu/1962:700",
+  rb:   "https://lagen.nu/1942:740",
+  lul:  "https://lagen.nu/1964:167",
+  sol:  "https://lagen.nu/2025:400",
+  lob:  "https://lagen.nu/1976:511"
 };
 
-const AL = {
-  age:               { under15:"Under 15 \u00E5r", "15to19":"15\u201319 \u00E5r", "20plus":"20+ \u00E5r" },
-  forbidden_area:    { ja:"F\u00F6rbjudet omr\u00E5de", nej:"Ej f\u00F6rbjudet omr\u00E5de" },
-  observed_drinking: { ja:"Iakttagit drickande", nej:"Ej iakttagit" },
-  suspects:          { ja:"Misst\u00E4nkta finns", nej:"Inga misst\u00E4nkta" },
+const LAW = {
+  al_3_7:   ["3 kap. 7 § alkohollagen", SFS.al + "#K3P7"],
+  al_3_9:   ["3 kap. 9 § alkohollagen", SFS.al + "#K3P9"],
+  al_11_3:  ["11 kap. 3 § alkohollagen", SFS.al + "#K11P3"],
+  al_11_4:  ["11 kap. 4 § alkohollagen", SFS.al + "#K11P4"],
+  al_11_7:  ["11 kap. 7 § alkohollagen", SFS.al + "#K11P7"],
+  al_11_10: ["11 kap. 10 § alkohollagen", SFS.al + "#K11P10"],
+  al_12_1:  ["12 kap. 1 § alkohollagen", SFS.al + "#K12P1"],
+  fva_1:    ["1 § lagen (1958:205)", SFS.fva + "#P1"],
+  fva_2:    ["2 § lagen (1958:205)", SFS.fva + "#P2"],
+  ffe_4:    ["4 § lagen (2024:782)", SFS.ffe + "#P4"],
+  ol_3_8:   ["3 kap. 8 § ordningslagen", SFS.ol + "#K3P8"],
+  ol_3_22:  ["3 kap. 22 § 2 st ordningslagen", SFS.ol + "#K3P22"],
+  brb_1_6:  ["1 kap. 6 § brottsbalken", SFS.brb + "#K1P6"],
+  rb_27:    ["27 kap. rättegångsbalken", SFS.rb + "#K27"],
+  lul_5:    ["5 § LUL", SFS.lul + "#P5"],
+  lul_6:    ["6 § LUL", SFS.lul + "#P6"],
+  lul_31:   ["31 § LUL", SFS.lul + "#P31"],
+  sol_19_1: ["19 kap. 1 § socialtjänstlagen", SFS.sol + "#K19P1"],
+  lob_1:    ["1 § LOB (1976:511)", SFS.lob + "#P1"]
 };
 
-const STEP_TITLES = { age:"\u00C5lder", forbidden_area:"Omr\u00E5de", observed_drinking:"Iakttagelse", suspects:"Misst\u00E4nkta", result:"Resultat" };
-const ORDER = ["age","forbidden_area","observed_drinking","suspects"];
+const REFS = [
+  ["2010:1622","Alkohollagen", SFS.al, "Åldersgränser (3 kap. 7 §), anskaffningsförbud (3 kap. 9 §), straff (11 kap.) och förverkande (12 kap. 1 §)."],
+  ["1958:205","Lagen om förverkande av alkohol m.m.", SFS.fva, "Förverkande vid förtäring i strid med lokal ordningsföreskrift (1 §) samt beslag och bevislig förstöring vid ringa värde (2 §)."],
+  ["2024:782","Lagen om förfarandet vid förverkande", SFS.ffe, "Ersatte lagen (1986:1009) den 8 november 2024. Polisman får besluta om förverkande upp till en tiondels prisbasbelopp (4 §)."],
+  ["1993:1617","Ordningslagen", SFS.ol, "Kommunens rätt att meddela lokala ordningsföreskrifter (3 kap. 8 §) och straffet penningböter (3 kap. 22 § andra stycket)."],
+  ["1962:700","Brottsbalken", SFS.brb, "Straffmyndighetsåldern 15 år (1 kap. 6 §)."],
+  ["1964:167","LUL – unga lagöverträdare", SFS.lul, "Underrättelse till vårdnadshavare (5 §) och socialnämnd (6 §), utredning av barn under 15 år (31 §)."],
+  ["2025:400","Socialtjänstlagen", SFS.sol, "Ersatte socialtjänstlagen (2001:453) den 1 juli 2025. Anmälningsskyldighet vid oro för barn (19 kap. 1 §)."],
+  ["1976:511","LOB", SFS.lob, "Omhändertagande av berusade personer."],
+  ["1942:740","Rättegångsbalken", SFS.rb, "Allmänna regler om beslag (27 kap.)."]
+];
 
-let state = { step:"age", ans:{}, hist:[] };
+/* ============================================================
+   Frågeflöde
+   ============================================================ */
+const STEPS = {
+  age:      { name:"Ålder" },
+  area:     { name:"Område" },
+  drinking: { name:"Förtäring" },
+  source:   { name:"Källa" },
+  handover: { name:"Mottagare" }
+};
 
-function stepsForAge(a){
-  return a==="20plus" ? ["age","forbidden_area","observed_drinking"]
-                      : ["age","forbidden_area","observed_drinking","suspects"];
+const LABELS = {
+  age:      { u15:"Under 15 år", "15to17":"15–17 år", "18to19":"18–19 år", "20plus":"20 år eller äldre" },
+  area:     { ja:"Förbjudet område", nej:"Ej förbjudet område", osaker:"Område osäkert" },
+  drinking: { ja:"Förtäring iakttagen", nej:"Ingen förtäring iakttagen" },
+  source:   { ja:"Känd/misstänkt källa", nej:"Okänd källa" },
+  handover: { ja:"Ska lämnas till under 20", nej:"Endast för eget bruk", oklart:"Oklart mottagarled" }
+};
+
+function flowFor(age){
+  if (!age) return ["age","area","drinking"];
+  return age === "20plus"
+    ? ["age","area","drinking","handover"]
+    : ["age","area","drinking","source"];
 }
 
-function advance(key, val){
-  const na = Object.assign({}, state.ans, { [key]: val });
-  let next = "result";
-  if (key==="age")               next = "forbidden_area";
-  if (key==="forbidden_area")    next = "observed_drinking";
-  if (key==="observed_drinking") next = (na.age==="15to19" || na.age==="under15") ? "suspects" : "result";
-  if (key==="suspects")          next = "result";
-  state.hist.push(state.step);
-  state.ans = na;
-  state.step = next;
-  render();
-}
+const NEXT = {
+  age:"area",
+  area:"drinking",
+  drinking:null,
+  source:"result",
+  handover:"result"
+};
 
-function back(){
-  if (!state.hist.length) return;
-  const prev = state.hist.pop();
-  const idx = ORDER.indexOf(prev);
-  ORDER.slice(idx+1).forEach(k => { delete state.ans[k]; });
-  state.step = prev;
-  render();
-}
+let state = { step:"age", ans:{}, hist:[], view:"wizard" };
 
-function reset(){ state = { step:"age", ans:{}, hist:[] }; render(); }
+/* ============================================================
+   Regelverk – vad som ska visas för respektive utfall
+   ============================================================ */
+function buildResult(){
+  const a = state.ans;
+  const minor = a.age !== "20plus";                 // under 20 år
+  const under18 = a.age === "u15" || a.age === "15to17";
+  const localOffence = a.area === "ja" && a.drinking === "ja";
+  const areaUnclear = a.area === "osaker";
+  const seize = a.source === "ja";                  // beslag i stället för direktförverkande
+  const r = { brott:[], fraga:[], gora:[], skriva:[] };
 
-function buildResults(){
-  const { age, forbidden_area:fa, observed_drinking:od, suspects } = state.ans;
-  const r = { brott:[], fraga:[], attGora:[], attSkriva:[] };
-  const localCrime = fa==="ja" && od==="ja";
+  /* ---------- BROTT ---------- */
+  if (minor){
+    r.brott.push({
+      t:"Olovligt anskaffande av alkohol",
+      d:"Riktas mot den som anskaffat, överlämnat eller bjudit den unge på alkoholen. Åldersgränsen är 20 år – förbudet gäller alltså även 18- och 19-åringar. Straffskalan är böter eller fängelse i högst två år, eller fängelse i högst fyra år om brottet är grovt.",
+      law:["al_3_9","al_11_7"]
+    });
+    r.brott.push({
+      t:"Olovlig försäljning av alkohol",
+      d:"Alternativ rubricering om alkoholen sålts vidare mot betalning. Grovt brott ger fängelse i lägst sex månader och högst sex år – vid bedömningen beaktas särskilt om verksamheten varit yrkesmässig eller riktad mot ungdomar.",
+      law:["al_11_3","al_11_4"]
+    });
+    r.brott.push({
+      t:"Den unge begår inget alkoholbrott",
+      tone:"flag",
+      d:"Att inneha eller dricka alkohol är inte kriminaliserat. Den som fått alkohol anskaffad åt sig för eget bruk är uttryckligen fri från ansvar för medverkan. Registrera därför ingen brottsmisstanke mot den unge på denna grund – den unge är vittne, inte misstänkt.",
+      law:["al_11_10"]
+    });
+  }
 
-  if (age==="under15"){
-    r.brott.push("Brott mot alkohollagen \u2013 av den som f\u00F6rsett barnet\nOlaglig alkoholf\u00F6rs\u00E4ljning\nalt. Olovligt anskaffande av alkoholdrycker\n\n\u26A0\uFE0F Barnet under 15 \u00E5r \u00E4r under straffbar \u00E5lder\n\u2013 brottsrubricering riktas mot den som tillhandah\u00E5llit alkoholen, INTE barnet");
-    r.fraga.push("Fr\u00E5ga vem han/hon fick alkoholen ifr\u00E5n\n\u2192 Avg\u00F6rande f\u00F6r att kunna utreda langning/\n   olovlig f\u00F6rs\u00E4ljning");
-    r.attGora.push("Inled f\u00F6runders\u00F6kning (FU)\nom langning/olaglig alkoholf\u00F6rs\u00E4ljning");
-    if (suspects==="ja"){
-      r.attGora.push("Alkohol tas i beslag\n\u2192 Till\u00E4mpa normal rutin f\u00F6r beslag\n(misst\u00E4nkta langare finns \u2013 alkoholen\nbeh\u00F6vs som bevisning)");
+  if (a.age === "u15"){
+    r.brott.push({
+      t:"Barnet är inte straffmyndigt",
+      tone:"flag",
+      d:"För gärning som någon begått innan 15 års ålder får påföljd inte dömas ut. Det gäller även en eventuell överträdelse av lokal ordningsföreskrift.",
+      law:["brb_1_6"]
+    });
+  }
+
+  if (localOffence){
+    r.brott.push({
+      t:"Brott mot lokal ordningsföreskrift – förtäring på offentlig plats",
+      d:(a.age === "u15"
+          ? "Gärningen är straffbelagd med penningböter, men barnet kan inte lagföras. Ordningsbot får inte utfärdas."
+          : "Straffet är penningböter. Detta är den enda gärning i ärendet som den unge själv kan lagföras för."
+        ) + " Kontrollera alltid paragrafnumret och det geografiska tillämpningsområdet i den aktuella kommunens föreskrift – numreringen skiljer sig mellan kommunerna i länet.",
+      law:["ol_3_8","ol_3_22"]
+    });
+  }
+
+  if (!minor && (a.handover === "ja" || a.handover === "oklart")){
+    r.brott.push({
+      t:"Olovligt anskaffande av alkohol",
+      d:(a.handover === "ja"
+          ? "Personen är över 20 år men alkoholen är avsedd för någon under 20 år."
+          : "Mottagarledet är oklart. Behandla misstanken som öppen tills den är utredd – bjudande på plats för förtäring på stället omfattas dock inte av förbudet.") +
+        " Fullbordat brott förutsätter inte att alkoholen hunnit överlämnas.",
+      law:["al_3_9","al_11_7"]
+    });
+  }
+
+  /* ---------- FRÅGA ---------- */
+  if (minor){
+    r.fraga.push({
+      t:"Var och av vem fick du alkoholen?",
+      d:"Den enskilt viktigaste frågan. Utan uppgift om källan kan langningen inte utredas.",
+      lines:[
+        "Namn, signalement, telefonnummer, tillhåll",
+        "Betalades den? Hur – kontant, Swish, gentjänst?",
+        "Köpt i butik, systembolag, restaurang eller av privatperson?",
+        "Är det första gången från samma person?"
+      ]
+    });
+    r.fraga.push({
+      t:"Vilken dryck och vilken mängd?",
+      d:"Varuslag och mängd krävs i gärningsbeskrivning, beslags- och förverkandebeslut.",
+      lines:["Antal och volym per förpackning","Alkoholhalt","Kvitto eller emballage som kan knyta an till inköpsstället"]
+    });
+  } else if (a.handover === "ja" || a.handover === "oklart"){
+    r.fraga.push({
+      t:"Vem är alkoholen avsedd för?",
+      d:"Klarlägg mottagarens ålder och relation, samt om ersättning utgått.",
+      lines:["Vem har beställt eller betalat?","Var skulle överlämnandet ske?","Har liknande inköp gjorts tidigare?"]
+    });
+  }
+  r.fraga.push({
+    t:"Är personen påverkad – och hur mår hen?",
+    d:"Gör en förutsättningslös bedömning av vårdbehov och skyddsbehov innan ärendet avslutas på plats.",
+    lines:[
+      "Behov av sjukvård framför omhändertagande",
+      (under18 ? "Barn ska i första hand överlämnas till vårdnadshavare eller socialtjänst" : "Omhändertagande enligt LOB endast om förutsättningarna är uppfyllda"),
+      "Trafiksäkerhet – ska personen köra, cykla eller åka moped?"
+    ],
+    law:["lob_1"]
+  });
+  if (areaUnclear){
+    r.fraga.push({
+      t:"Ligger platsen inom förbudsområdet?",
+      d:"Kontrollera kommunens allmänna lokala ordningsföreskrifter innan ordningsbot utfärdas eller alkohol förverkas på den grunden. Förbud får bara omfatta de platser där det är särskilt motiverat, inte hela kommunen.",
+      law:["ol_3_8"]
+    });
+  }
+
+  /* ---------- ATT GÖRA ---------- */
+  if (minor){
+    r.gora.push({
+      t:"Inled förundersökning om olovligt anskaffande",
+      d:"Förundersökningen riktas mot den som tillhandahållit alkoholen – mot känd person om sådan finns, annars mot okänd gärningsman.",
+      law:["al_11_7"]
+    });
+
+    if (seize){
+      r.gora.push({
+        t:"Ta alkoholen i beslag",
+        d:"Det finns en misstänkt tillhandahållare och alkoholen har bevisvärde. Använd ordinarie beslagsrutin – förverkandefrågan avgörs senare av åklagare eller domstol.",
+        lines:[
+          "Fotografera förpackningar, etiketter och eventuella kvitton innan beslag",
+          "Beslagtagen egendom får bevisligen förstöras om värdet är ringa eller det annars är försvarligt",
+          "Säkra beslagsliggarnummer och redovisa i anmälan"
+        ],
+        law:["rb_27","fva_2"]
+      });
     } else {
-      r.attGora.push("Direktf\u00F6rverka alkoholen p\u00E5 plats\n\u{1F4CB} Lag (1958:205) om f\u00F6rverkande av\nalkoholhaltiga drycker, 1\u00A7");
-    }
-    r.attGora.push("Kontakta v\u00E5rdnadshavare omedelbart");
-    r.attSkriva.push("Anm\u00E4lan: 'Olaglig alkoholf\u00F6rs\u00E4ljning'\n\n\u2022 Fritext: tid, plats, typ av alkohol,\n  om f\u00F6r\u00E4ldrar informerades,\n  om alkoholen f\u00F6rverkades\n  (inget p-nr i fritexten)\n\u2022 Vittne: barnet med alkoholen\n\u2022 Anm\u00E4lare: Polismyndigheten\n  i Kronobergs l\u00E4n\n\u2022 Misst\u00E4nkt: om det finns\n\u2022 Brottsrubricering: 5047- + 'langning'\n\u2022 Bifoga: f\u00F6rverkandeprotokoll\n  eller beslag");
-    if (localCrime){
-      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats\n(registreras ej mot barnet \u2013 under straffbar \u00E5lder)");
-      r.attSkriva.push("Dokumentera f\u00F6rverkandet i b\u00F6terblanketten:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+      r.gora.push({
+        t:"Förverka alkoholen på plats",
+        d:"Alkoholen har varit föremål för brott enligt alkohollagen och ska förklaras förverkad. Förverkande får ske även hos den som är fri från ansvar – alltså hos den unge själv.",
+        lines:[
+          "Polisman får besluta om förverkande när värdet inte överstiger en tiondels prisbasbelopp",
+          "Beslagtagen alkohol får bevisligen förstöras när värdet är ringa – utspillning ska bevittnas",
+          "Underrätta den unge om beslutet och om rätten att anmäla missnöje"
+        ],
+        law:["al_12_1","ffe_4","fva_2"]
+      });
+      if (localOffence){
+        r.gora.push({
+          t:"Alternativ förverkandegrund föreligger",
+          d:"Eftersom förtäring skett i strid med lokal ordningsföreskrift kan alkoholen förverkas även på den grunden, oavsett vem drycken tillhör, om det inte finns särskilda skäl mot det.",
+          law:["fva_1"]
+        });
+      }
     }
   }
 
-  if (age==="15to19"){
-    r.brott.push("Brott mot alkohollagen\nOlovligt anskaffande av alkoholdrycker\nalt. Olaglig alkoholf\u00F6rs\u00E4ljning\n(beroende p\u00E5 omst\u00E4ndigheterna)");
-    if (suspects==="ja"){
-      r.attGora.push("Alkohol tas i beslag\n\u2192 Till\u00E4mpa normal rutin f\u00F6r beslag\n(misst\u00E4nkta langare finns \u2013 alkoholen\nbeh\u00F6vs som bevisning)");
-    } else {
-      r.attGora.push("Direktf\u00F6rverka all alkohol p\u00E5 plats\n\u{1F4CB} Alkohollagen 12 kap. 1\u00A7");
+  if (a.age === "u15"){
+    r.gora.push({
+      t:"Underrätta vårdnadshavare omedelbart",
+      d:"Barnet ska överlämnas till vårdnadshavare eller, om det inte är möjligt eller lämpligt, till socialtjänsten. Lämna aldrig ett barn kvar på platsen.",
+      law:["lul_5"]
+    });
+    r.gora.push({
+      t:"Gör orosanmälan till socialnämnden",
+      d:"Anmälningsskyldigheten är personlig, gäller genast och kan inte delegeras. Alkoholpåverkan eller alkoholinnehav hos ett barn under 15 år utgör i sig grund för anmälan.",
+      law:["sol_19_1"]
+    });
+    r.gora.push({
+      t:"Överväg – men rutinmässigt inte – utredning enligt 31 § LUL",
+      tone:"flag",
+      d:"En utredning om barnets egen gärning får inledas endast när något av de i lagen angivna syftena är uppfyllt. JO har kritiserat att 31 §-utredningar inleds slentrianmässigt vid bagatellartade gärningar. Langningsutredningen mot den vuxne drivs som vanlig förundersökning och kräver ingen 31 §-utredning.",
+      law:["lul_31"]
+    });
+  }
+
+  if (a.age === "15to17"){
+    r.gora.push({
+      t:"Underrätta vårdnadshavare",
+      d:"Om den unge är skäligen misstänkt för brott – i praktiken förtäringsöverträdelsen – ska vårdnadshavare underrättas omedelbart. Även när brottsmisstanke saknas bör vårdnadshavare kontaktas utifrån barnets bästa.",
+      law:["lul_5"]
+    });
+    r.gora.push({
+      t:"Gör orosanmälan till socialnämnden",
+      d:"Skyldigheten gäller genast vid kännedom eller misstanke om att ett barn far illa och är personlig. Underrättelse enligt 6 § LUL krävs bara vid misstanke om brott som kan ge fängelse – en ordningsförseelse räcker inte, så anmälan görs enligt socialtjänstlagen.",
+      law:["sol_19_1","lul_6"]
+    });
+  }
+
+  if (a.age === "18to19"){
+    r.gora.push({
+      t:"Ingen underrättelse till vårdnadshavare",
+      d:"Personen är myndig. Vårdnadshavare ska inte kontaktas och socialtjänstens anmälningsskyldighet för barn gäller inte. Beslut och underrättelser går direkt till personen själv.",
+      law:["sol_19_1"]
+    });
+  }
+
+  if (!minor){
+    if (a.handover === "ja" || a.handover === "oklart"){
+      r.gora.push({
+        t:"Inled förundersökning om olovligt anskaffande",
+        d:"Säkra alkoholen som bevis, hör personen om avsikten och identifiera den tänkta mottagaren.",
+        law:["al_11_7","rb_27"]
+      });
     }
-    r.fraga.push("Fr\u00E5ga vem han/hon fick alkoholen ifr\u00E5n\n\u2192 Avg\u00F6rande f\u00F6r om langning kan styrkas");
-    r.attGora.push("Inled f\u00F6runders\u00F6kning (FU)\nom langning");
-    r.attGora.push("Kontakta v\u00E5rdnadshavare\n(g\u00E4ller 15, 16 och 17-\u00E5ringar)");
-    r.attSkriva.push("\u{1F4CD} Inne p\u00E5 stationen:\nProtokollet \u2013 Beslut om f\u00F6rverkande\nenl. Lagen (1986:1009) om f\u00F6rfarandet i\nvissa fall vid f\u00F6rverkande\nS\u00F6k: 'f\u00F6rverkande' i formul\u00E4rportalen");
-    r.attSkriva.push("Anm\u00E4lan: 'Olaglig alkoholf\u00F6rs\u00E4ljning'\n\n\u2022 Fritext: tid, plats, typ av alkohol,\n  om f\u00F6r\u00E4ldrar informerades,\n  om alkoholen f\u00F6rverkades\n  (inget p-nr i fritexten)\n\u2022 Vittne: personen med alkoholen\n\u2022 Anm\u00E4lare: Polismyndigheten\n  i Kronobergs l\u00E4n\n\u2022 Misst\u00E4nkt: om det finns\n\u2022 Brottsrubricering: 5047- + 'langning'\n\u2022 Bifoga: f\u00F6rverkandeprotokoll\n  eller beslag");
-    r.attSkriva.push("Sidan 3 skickas hem:\n\u2022 Under 18 \u00E5r \u2192 till v\u00E5rdnadshavaren\n\u2022 18\u201319 \u00E5r \u2192 till personen sj\u00E4lv");
-    if (localCrime){
-      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
-      r.attSkriva.push("B\u00F6ter 941A \u2013 500 kr\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats\n\nDokumentera f\u00F6rverkandet i b\u00F6terblanketten:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+    if (localOffence){
+      r.gora.push({
+        t:"Förverka alkoholen",
+        d:"Dryck som påträffas hos den som förtär den i strid med lokal ordningsföreskrift ska förklaras förverkad, oavsett vem den tillhör, om inte särskilda skäl talar emot. Vid ringa värde får den bevisligen förstöras på plats.",
+        law:["fva_1","fva_2"]
+      });
+    }
+    if (!localOffence && a.handover === "nej"){
+      r.gora.push({
+        t:"Ingen tvångsåtgärd mot alkoholen",
+        d:"Personen får lagligen inneha och förtära alkoholen. Det saknas grund för både beslag och förverkande. Informera om gällande regler och avsluta ingripandet.",
+        law:["al_3_7"]
+      });
     }
   }
 
-  if (age==="20plus"){
-    if (localCrime){
-      r.brott.push("Brott mot lokal f\u00F6reskrift 11\u00A7\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
-      r.attSkriva.push("B\u00F6ter 941A \u2013 500 kr\nF\u00F6rt\u00E4rt alkohol p\u00E5 allm\u00E4n plats");
-      r.attSkriva.push("Dokumentera f\u00F6rverkandet i b\u00F6terblanketten\nom alkoholen f\u00F6rverkas:\n\u2192 G\u00E4rningsbeskrivningsrutan:\n   'Tas i beslag f\u00F6r f\u00F6rverkande...\n   [precisera varuslag och m\u00E4ngd]'\n\u2192 Godk\u00E4nnanderutan: + 'och f\u00F6rverkandet'");
+  /* ---------- ATT SKRIVA ---------- */
+  if (minor){
+    r.skriva.push({
+      t:"Anmälan – olovligt anskaffande av alkohol",
+      d:"Använd aktuell brottskod för olovligt anskaffande (langning) enligt Polismyndighetens gällande kodlista – verifiera koden, den äldre koden 5047 kan ha ersatts.",
+      lines:[
+        "Anmälare: Polismyndigheten",
+        "Vittne: den unge som påträffades med alkoholen",
+        "Misstänkt: den som tillhandahållit alkoholen, om identiteten är känd",
+        "Fritext: tid, plats, varuslag och mängd, hur alkoholen anskaffats, vidtagna beslut" + (under18 ? ", samt att vårdnadshavare underrättats" : ""),
+        "Skriv aldrig personnummer i fritexten",
+        "Bifoga beslags- eller förverkandeprotokoll"
+      ],
+      law:["al_11_7"]
+    });
+    r.skriva.push({
+      t: seize ? "Beslagsprotokoll" : "Protokoll – beslut om förverkande",
+      d: seize
+        ? "Upprätta beslagsprotokoll enligt ordinarie rutin och anmäl beslaget till Polismyndigheten."
+        : "Upprätta protokoll över beslutet om förverkande. Blanketten finns i formulärportalen – sök på \"förverkande\". Observera att lagen (1986:1009) är upphävd; förfarandet regleras numera i lagen (2024:782).",
+      law: seize ? ["rb_27","fva_2"] : ["ffe_4","al_12_1"]
+    });
+    if (!seize){
+      r.skriva.push({
+        t:"Underrättelse om beslutet",
+        d: under18
+          ? "Underrättelsen skickas till vårdnadshavaren."
+          : "Underrättelsen skickas till personen själv – ingen vårdnadshavare ska underrättas.",
+        lines:["Ange vad som förverkats, på vilken grund och hur missnöje anmäls","Anmäls missnöje ska åklagare väcka talan inom en månad"],
+        law:["ffe_4"]
+      });
     }
+    if (under18){
+      r.skriva.push({
+        t:"Orosanmälan till socialnämnden",
+        d:"Dokumentera anmälan i ärendet. Ange faktiska iakttagelser – påverkansgrad, sällskap, plats, tidpunkt – inte värderingar.",
+        law:["sol_19_1"]
+      });
+    }
+  }
+
+  if (minor && localOffence && a.age !== "u15"){
+    r.skriva.push({
+      t:"Ordningsbot – brott mot lokal ordningsföreskrift",
+      d:"Kontrollera OB-nummer och belopp mot gällande ordningsbotskatalog innan föreläggandet utfärdas; posten har tidigare varit 941A om 500 kronor.",
+      lines:[
+        "Ange rätt paragraf i den aktuella kommunens föreskrift",
+        "Gärningsbeskrivningen: lägg till \"Tas i beslag för förverkande\" och precisera varuslag och mängd",
+        "Godkännanderutan: komplettera med \"och förverkandet\"",
+        "Utan detta tillägg omfattar godkännandet inte förverkandet"
+      ],
+      law:["ol_3_22","fva_1"]
+    });
+  }
+  if (localOffence && a.age === "u15"){
+    r.skriva.push({
+      t:"Ingen ordningsbot – dokumentera i stället",
+      d:"Ordningsbot får inte utfärdas mot barn under 15 år. Dokumentera förtäringen och förverkandet i anmälan respektive förverkandeprotokollet.",
+      law:["brb_1_6","fva_1"]
+    });
+  }
+
+  if (!minor && localOffence){
+    r.skriva.push({
+      t:"Ordningsbot – brott mot lokal ordningsföreskrift",
+      d:"Kontrollera OB-nummer och belopp mot gällande ordningsbotskatalog; posten har tidigare varit 941A om 500 kronor.",
+      lines:[
+        "Gärningsbeskrivningen: lägg till \"Tas i beslag för förverkande\" och precisera varuslag och mängd",
+        "Godkännanderutan: komplettera med \"och förverkandet\""
+      ],
+      law:["ol_3_22","fva_1"]
+    });
+  }
+  if (!minor && (a.handover === "ja" || a.handover === "oklart")){
+    r.skriva.push({
+      t:"Anmälan – olovligt anskaffande av alkohol",
+      d:"Personen registreras som misstänkt. Redovisa vad som talar för att alkoholen varit avsedd för någon under 20 år.",
+      law:["al_11_7"]
+    });
   }
 
   return r;
 }
 
-// ---- helpers ----
-function el(tag, attrs, children){
-  const node = document.createElement(tag);
-  if (attrs) for (const k in attrs){
-    if (k==="style") node.setAttribute("style", attrs[k]);
-    else if (k==="class") node.className = attrs[k];
-    else if (k==="onclick") node.addEventListener("click", attrs[k]);
-    else if (k==="text") node.textContent = attrs[k];
-    else node.setAttribute(k, attrs[k]);
+/* ============================================================
+   Vy
+   ============================================================ */
+const SVG = {
+  chevron:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
+  alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  scale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>',
+  question:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+  task:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="m17 12 2 2 4-4"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
+  print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>',
+  restart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>'
+};
+
+const SECTIONS = [
+  ["brott",  "red",   "Brott",       SVG.scale,    "Rubriceringar att pröva"],
+  ["fraga",  "amber", "Fråga",       SVG.question, "Uppgifter att säkra på plats"],
+  ["gora",   "green", "Att göra",    SVG.task,     "Åtgärder under ingripandet"],
+  ["skriva", "blue",  "Att skriva",  SVG.pen,      "Dokumentation efteråt"]
+];
+
+function h(tag, props, kids){
+  const n = document.createElement(tag);
+  if (props) for (const k in props){
+    const v = props[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "html") n.innerHTML = v;
+    else if (k === "on") for (const e in v) n.addEventListener(e, v[e]);
+    else n.setAttribute(k, v);
   }
-  if (children) children.forEach(c => { if (c) node.appendChild(c); });
+  if (kids) kids.forEach(c => { if (c) n.appendChild(c); });
+  return n;
+}
+
+function lawChips(keys){
+  if (!keys || !keys.length) return null;
+  const box = h("div", { class:"laws" });
+  keys.forEach(k => {
+    const l = LAW[k];
+    if (!l) return;
+    box.appendChild(h("a", {
+      class:"law", href:l[1], target:"_blank", rel:"noopener noreferrer", text:l[0]
+    }));
+  });
+  return box;
+}
+
+function renderItem(it){
+  const node = h("div", { class:"item" + (it.tone === "flag" ? " flag" : "") });
+  node.appendChild(h("div", { class:"item-title", text:it.t }));
+  if (it.d) node.appendChild(h("p", { class:"item-desc", text:it.d }));
+  if (it.lines && it.lines.length){
+    const ul = h("ul");
+    it.lines.forEach(li => ul.appendChild(h("li", { text:li })));
+    node.appendChild(ul);
+  }
+  const chips = lawChips(it.law);
+  if (chips) node.appendChild(chips);
   return node;
 }
 
-function choiceBtn(label, sub, accent, badge, onClick, delay){
-  const btn = el("button", { class:"choice", onclick:onClick,
-    style:`border-left:4px solid ${accent}; animation-delay:${delay}s;` });
-  const b = el("div", { class:"choice-badge",
-    style:`background:linear-gradient(135deg, ${accent}, ${accent}99); box-shadow:0 4px 14px ${accent}55;`, text:badge });
-  const txt = el("div");
-  txt.appendChild(el("div", { class:"choice-label", text:label }));
-  if (sub) txt.appendChild(el("div", { class:"choice-sub", text:sub }));
-  btn.appendChild(b); btn.appendChild(txt);
+function option(o){
+  const btn = h("button", { class:"opt enter", type:"button", on:{ click:o.onClick },
+    style:"animation-delay:" + o.delay + "ms" });
+  btn.appendChild(h("div", { class:"opt-key " + o.tone, text:o.key }));
+  const body = h("div", { class:"opt-body" }, [
+    h("div", { class:"opt-title", text:o.title }),
+    o.hint ? h("div", { class:"opt-hint", text:o.hint }) : null
+  ]);
+  btn.appendChild(body);
+  btn.appendChild(h("div", { class:"opt-chevron", html:SVG.chevron }));
   return btn;
 }
 
-function catCard(cat, items, delay){
-  if (!items.length) return null;
-  const c = CATS[cat];
-  const card = el("div", { class:"cat-card", style:`border:1px solid ${c.border}; box-shadow:0 8px 28px ${c.glow}; animation-delay:${delay}s;` });
-  const head = el("div", { class:"cat-head", style:`background:${c.grad};` });
-  head.appendChild(el("span", { class:"cat-icon", text:c.icon }));
-  head.appendChild(el("span", { class:"cat-label", text:c.label }));
-  head.appendChild(el("span", { class:"cat-count", text:String(items.length) }));
-  card.appendChild(head);
-  const body = el("div", { class:"cat-body" });
-  items.forEach(it => body.appendChild(el("div", { class:"cat-item", text:it })));
-  card.appendChild(body);
-  return card;
+function advance(key, val){
+  state.hist.push(state.step);
+  state.ans[key] = val;
+  let next = NEXT[key];
+  if (key === "drinking") next = (state.ans.age === "20plus") ? "handover" : "source";
+  state.step = next || "result";
+  render();
+  window.scrollTo({ top:0, behavior:"instant" in window ? "instant" : "auto" });
+}
+
+function back(){
+  if (!state.hist.length) return;
+  const prev = state.hist.pop();
+  const flow = flowFor(state.ans.age);
+  const i = flow.indexOf(prev);
+  if (i > -1) flow.slice(i).forEach(k => delete state.ans[k]);
+  state.step = prev;
+  render();
+}
+
+function reset(){
+  state = { step:"age", ans:{}, hist:[], view:"wizard" };
+  render();
+  window.scrollTo({ top:0 });
+}
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+function resultAsText(){
+  const a = state.ans;
+  const lines = ["ALKOHOL – INGRIPANDESTÖD", ""];
+  lines.push("Underlag: " + flowFor(a.age).filter(k => a[k]).map(k => LABELS[k][a[k]]).join(" · "));
+  lines.push("");
+  const res = buildResult();
+  SECTIONS.forEach(([key, , label]) => {
+    if (!res[key].length) return;
+    lines.push(label.toUpperCase());
+    res[key].forEach(it => {
+      lines.push("- " + it.t);
+      if (it.d) lines.push("  " + it.d);
+      if (it.lines) it.lines.forEach(l => lines.push("    * " + l));
+      if (it.law) lines.push("  Lagrum: " + it.law.map(k => LAW[k] && LAW[k][0]).filter(Boolean).join("; "));
+    });
+    lines.push("");
+  });
+  lines.push("Beslutsstöd – ersätter inte lagtext eller egen rättslig bedömning.");
+  return lines.join("\n");
+}
+
+function copyResult(){
+  const text = resultAsText();
+  const done = () => toast("Underlaget kopierat");
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done, fallback);
+  } else fallback();
+  function fallback(){
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); }
+    catch(e){ toast("Kunde inte kopiera"); }
+    document.body.removeChild(ta);
+  }
+}
+
+function renderSteps(){
+  const box = document.getElementById("steps");
+  box.innerHTML = "";
+  if (state.view !== "wizard"){ box.style.display = "none"; return; }
+  box.style.display = "flex";
+  const flow = flowFor(state.ans.age);
+  const idx = state.step === "result" ? flow.length : flow.indexOf(state.step);
+  flow.forEach((s, i) => {
+    const cls = "step" + (i < idx ? " done" : i === idx ? " now" : "");
+    box.appendChild(h("div", { class:cls }, [
+      h("div", { class:"step-bar" }),
+      h("div", { class:"step-name", text:STEPS[s].name })
+    ]));
+  });
+  box.appendChild(h("div", { class:"step final" + (state.step === "result" ? " done" : "") }, [
+    h("div", { class:"step-bar" }),
+    h("div", { class:"step-name", text:"Resultat" })
+  ]));
+}
+
+function renderRefs(view){
+  view.appendChild(h("h1", { text:"Lagrum och källor" }));
+  view.appendChild(h("p", { class:"lede", text:"Samtliga hänvisningar i stödet pekar mot gällande författningstext. Kontrollerad i augusti 2026." }));
+  const list = h("div", { class:"reflist" });
+  REFS.forEach(([sfs, name, url, note]) => {
+    list.appendChild(h("a", { class:"refrow", href:url, target:"_blank", rel:"noopener noreferrer" }, [
+      h("span", { class:"refrow-sfs", text:sfs }),
+      h("span", { class:"refrow-name" }, [
+        h("b", { text:name }),
+        h("span", { class:"refrow-note", text:note })
+      ])
+    ]));
+  });
+  view.appendChild(list);
+
+  view.appendChild(h("div", { class:"note", style:"margin-top:22px" }, [
+    h("b", { text:"Ändringar att hålla reda på. " }),
+    h("span", { text:"Lagen (1986:1009) om förfarandet i vissa fall vid förverkande upphävdes den 8 november 2024 och ersattes av lagen (2024:782). Socialtjänstlagen (2001:453) ersattes den 1 juli 2025 av socialtjänstlagen (2025:400). Äldre rutinbeskrivningar och blanketter kan fortfarande hänvisa till de upphävda lagarna." })
+  ]));
+
+  view.appendChild(h("div", { class:"actions" }, [
+    h("button", { class:"btn primary", type:"button", on:{ click:() => { state.view = "wizard"; render(); } } }, [
+      h("span", { html:SVG.back }), h("span", { text:"Tillbaka till stödet" })
+    ])
+  ]));
+}
+
+function renderQuestion(view){
+  const s = state.step;
+
+  if (state.hist.length){
+    view.appendChild(h("button", { class:"linkback", type:"button", on:{ click:back } }, [
+      h("span", { html:SVG.back }), h("span", { text:"Tillbaka" })
+    ]));
+  }
+
+  const opts = h("div", { class:"options" });
+
+  if (s === "age"){
+    view.appendChild(h("h1", { text:"Hur gammal är personen?" }));
+    view.appendChild(h("p", { class:"lede", text:"Utgångsläge: polis träffar på någon som har alkohol med sig. Åldern styr både brottsrubricering och vilka underrättelser som måste göras." }));
+    [
+      ["u15","Under 15 år","Inte straffmyndig · vårdnadshavare och orosanmälan","red","<15"],
+      ["15to17","15–17 år","Straffmyndig men omyndig · LUL och orosanmälan","amber","15"],
+      ["18to19","18–19 år","Myndig men under 20 – langning är fortfarande brott","amber","18"],
+      ["20plus","20 år eller äldre","Får lagligen köpa och inneha alkohol","blue","20+"]
+    ].forEach(([v, t, hint, tone, key], i) =>
+      opts.appendChild(option({ key, tone, title:t, hint, delay:i*45, onClick:() => advance("age", v) })));
+  }
+
+  else if (s === "area"){
+    view.appendChild(h("h1", { text:"Förbjudet område?" }));
+    view.appendChild(h("p", { class:"lede", text:"Befinner sig personen på en plats där kommunens allmänna lokala ordningsföreskrifter förbjuder alkoholförtäring?" }));
+    [
+      ["ja","Ja – inom förbudsområde","Förtäring där är straffbelagd med penningböter","red","Ja"],
+      ["nej","Nej – utanför förbudsområde",null,"grey","Nej"],
+      ["osaker","Osäker","Stödet flaggar för att föreskriften måste kontrolleras","amber","?"]
+    ].forEach(([v, t, hint, tone, key], i) =>
+      opts.appendChild(option({ key, tone, title:t, hint, delay:i*45, onClick:() => advance("area", v) })));
+  }
+
+  else if (s === "drinking"){
+    view.appendChild(h("h1", { text:"Iakttagen förtäring?" }));
+    view.appendChild(h("p", { class:"lede", text:"Har du eller en kollega direkt observerat att personen druckit alkohol? Enbart innehav räcker inte för att en förtäringsöverträdelse ska kunna styrkas." }));
+    [
+      ["ja","Ja – förtäring iakttagen","Egen iakttagelse eller kollegas","red","Ja"],
+      ["nej","Nej – ingen iakttagelse","Endast innehav har konstaterats","grey","Nej"]
+    ].forEach(([v, t, hint, tone, key], i) =>
+      opts.appendChild(option({ key, tone, title:t, hint, delay:i*45, onClick:() => advance("drinking", v) })));
+  }
+
+  else if (s === "source"){
+    view.appendChild(h("h1", { text:"Finns en känd källa?" }));
+    view.appendChild(h("p", { class:"lede", text:"Finns det en identifierad eller misstänkt person som tillhandahållit alkoholen? Svaret avgör om alkoholen ska tas i beslag som bevis eller förverkas direkt på plats." }));
+    [
+      ["ja","Ja – känd eller misstänkt källa","Alkoholen har bevisvärde → beslag","red","Ja"],
+      ["nej","Nej – källan är okänd","Inget bevisbehov → förverkande på plats","grey","Nej"]
+    ].forEach(([v, t, hint, tone, key], i) =>
+      opts.appendChild(option({ key, tone, title:t, hint, delay:i*45, onClick:() => advance("source", v) })));
+  }
+
+  else if (s === "handover"){
+    view.appendChild(h("h1", { text:"Vem är alkoholen till?" }));
+    view.appendChild(h("p", { class:"lede", text:"Personen får själv inneha alkoholen. Men att anskaffa åt någon under 20 år är brott – även utan ersättning. Att bjuda på förtäring på stället omfattas dock inte." }));
+    [
+      ["ja","Avsedd för någon under 20 år","Misstanke om olovligt anskaffande","red","Ja"],
+      ["oklart","Oklart","Behandlas som öppen misstanke","amber","?"],
+      ["nej","Endast för eget bruk eller sällskap över 20","Inget alkoholbrott","grey","Nej"]
+    ].forEach(([v, t, hint, tone, key], i) =>
+      opts.appendChild(option({ key, tone, title:t, hint, delay:i*45, onClick:() => advance("handover", v) })));
+  }
+
+  view.appendChild(opts);
+
+  // Färgnyckel
+  const legend = h("div", { class:"legend" });
+  legend.appendChild(h("div", { class:"legend-title", text:"Så presenteras resultatet" }));
+  const grid = h("div", { class:"legend-grid" });
+  SECTIONS.forEach(([, tone, label, icon, desc]) => {
+    const item = h("div", { class:"legend-item" });
+    const ic = h("span", { html:icon });
+    ic.firstChild.style.color = "var(--" + (tone === "red" ? "red" : tone === "amber" ? "amber" : tone === "green" ? "green" : "blue") + ")";
+    item.appendChild(ic);
+    item.appendChild(h("span", { text:label }, [ h("span", { class:"desc", text:desc }) ]));
+    grid.appendChild(item);
+  });
+  legend.appendChild(grid);
+  view.appendChild(legend);
+}
+
+function renderResult(view){
+  const a = state.ans;
+  const res = buildResult();
+  const localOffence = a.area === "ja" && a.drinking === "ja";
+  const minor = a.age !== "20plus";
+
+  let tone, title, text;
+  if (!res.brott.length){
+    tone = "clear"; title = "Inget brott konstaterat";
+    text = "Personen är 20 år eller äldre, ingen förtäringsöverträdelse har iakttagits och inget talar för langning. Alkoholen kan inte förverkas.";
+  } else if (minor){
+    tone = "alert"; title = "Brottsmisstanke föreligger";
+    text = "Misstanken riktas mot den som tillhandahållit alkoholen – inte mot den unge, som är fri från ansvar för medverkan." +
+           (localOffence && a.age !== "u15" ? " Den unge kan däremot lagföras för förtäringen på platsen." : "");
+  } else if (localOffence && !(a.handover === "ja" || a.handover === "oklart")){
+    tone = "minor"; title = "Ordningsförseelse";
+    text = "Förtäring i strid med lokal ordningsföreskrift. Penningböter och förverkande av alkoholen.";
+  } else {
+    tone = "alert"; title = "Brottsmisstanke föreligger";
+    text = "Misstanke om olovligt anskaffande. Se rubriceringar och åtgärder nedan.";
+  }
+
+  const verdict = h("div", { class:"verdict enter " + tone });
+  verdict.appendChild(h("div", { class:"verdict-icon", html: tone === "clear" ? SVG.check : SVG.alert }));
+  verdict.appendChild(h("div", {}, [
+    h("div", { class:"verdict-title", text:title }),
+    h("p", { class:"verdict-text", text:text })
+  ]));
+  view.appendChild(verdict);
+
+  let delay = 60;
+  SECTIONS.forEach(([key, toneName, label, icon]) => {
+    const items = res[key];
+    if (!items.length) return;
+    const sec = h("div", { class:"section enter " + toneName, style:"animation-delay:" + delay + "ms" });
+    delay += 60;
+    const head = h("div", { class:"section-head" });
+    head.appendChild(h("span", { html:icon }));
+    head.appendChild(h("span", { class:"label", text:label }));
+    head.appendChild(h("span", { class:"count", text:String(items.length) }));
+    sec.appendChild(head);
+    const body = h("div", { class:"items" });
+    items.forEach(it => body.appendChild(renderItem(it)));
+    sec.appendChild(body);
+    view.appendChild(sec);
+  });
+
+  view.appendChild(h("div", { class:"note" }, [
+    h("b", { text:"Helhetsbedömning. " }),
+    h("span", { text:"Stödet visar de vanligaste utfallen. Ringa gärningar är straffria enligt 11 kap. 10 § alkohollagen, och omständigheterna i det enskilda ärendet kan leda till en annan bedömning. Kontrollera alltid gällande kommunal föreskrift, brottskod och ordningsbotskatalog." })
+  ]));
+
+  view.appendChild(h("div", { class:"actions" }, [
+    h("button", { class:"btn", type:"button", on:{ click:copyResult } }, [
+      h("span", { html:SVG.copy }), h("span", { text:"Kopiera underlag" })
+    ]),
+    h("button", { class:"btn", type:"button", on:{ click:() => window.print() } }, [
+      h("span", { html:SVG.print }), h("span", { text:"Skriv ut" })
+    ]),
+    h("button", { class:"btn primary", type:"button", on:{ click:reset } }, [
+      h("span", { html:SVG.restart }), h("span", { text:"Ny kontroll" })
+    ])
+  ]));
 }
 
 function render(){
-  const app = document.getElementById("app");
-  app.innerHTML = "";
+  const view = document.getElementById("view");
+  view.innerHTML = "";
+  renderSteps();
 
-  // Header
-  const header = el("div", { class:"header" });
-  const row = el("div", { class:"header-row" });
-  row.appendChild(el("div", { class:"logo", text:"\u{1F693}" }));
-  const titleWrap = el("div", { style:"flex:1;" });
-  titleWrap.appendChild(el("div", { class:"title", text:"Alkohol \u00B7 Ingripandest\u00F6d" }));
-  titleWrap.appendChild(el("div", { class:"subtitle", text:"Kronobergs l\u00E4n \u00B7 Yttre tj\u00E4nst" }));
-  row.appendChild(titleWrap);
-  if (state.step!=="age") row.appendChild(el("button", { class:"btn-new", onclick:reset, text:"\u21BA Ny" }));
-  header.appendChild(row);
+  document.getElementById("btnRefs").setAttribute("aria-pressed", String(state.view === "refs"));
 
-  // Progress
-  const progSteps = state.ans.age ? stepsForAge(state.ans.age) : ORDER.slice(0,3);
-  const curIdx = state.step==="result" ? progSteps.length : progSteps.indexOf(state.step);
-  const prog = el("div", { class:"progress" });
-  progSteps.forEach((s,i) => {
-    const wrap = el("div", { class:"progress-step" });
-    let barCls = "progress-bar";
-    if (i < curIdx) barCls += " done";
-    else if (i===curIdx && state.step!=="result") barCls += " active";
-    wrap.appendChild(el("div", { class:barCls }));
-    wrap.appendChild(el("div", { class:"progress-label" + (i<=curIdx?" lit":""), text:STEP_TITLES[s] }));
-    prog.appendChild(wrap);
-  });
-  const resWrap = el("div", { class:"progress-step" });
-  resWrap.appendChild(el("div", { class:"progress-bar" + (state.step==="result"?" result-done":"") }));
-  resWrap.appendChild(el("div", { class:"progress-label" + (state.step==="result"?" result-lit":""), text:"Resultat" }));
-  prog.appendChild(resWrap);
-  header.appendChild(prog);
-  app.appendChild(header);
+  const sub = document.getElementById("brandSub");
+  const flow = flowFor(state.ans.age);
+  const picked = flow.filter(k => state.ans[k]).map(k => LABELS[k][state.ans[k]]);
+  sub.textContent = picked.length ? picked.join(" · ") : "Yttre tjänst · beslutsstöd";
 
-  // Chips
-  const keys = Object.keys(state.ans);
-  if (keys.length){
-    const chips = el("div", { class:"chips" });
-    keys.forEach(k => chips.appendChild(el("span", { class:"chip", text:(AL[k] && AL[k][state.ans[k]]) || state.ans[k] })));
-    app.appendChild(chips);
-  }
+  if (state.view === "refs") renderRefs(view);
+  else if (state.step === "result") renderResult(view);
+  else renderQuestion(view);
 
-  const content = el("div", { class:"content" });
-
-  if (state.hist.length && state.step!=="result"){
-    content.appendChild(el("button", { class:"back-btn", onclick:back, text:"\u2190 Tillbaka" }));
-  }
-
-  if (state.step==="age"){
-    content.appendChild(el("h2", { text:"Personens \u00E5lder?" }));
-    content.appendChild(el("p", { class:"question-sub", text:"Polis tr\u00E4ffar n\u00E5gon som har alkohol med sig" }));
-    content.appendChild(choiceBtn("Under 15 \u00E5r","0\u201314 \u00E5r \u00B7 under straffbar \u00E5lder","#ef4444","<15",()=>advance("age","under15"),0.05));
-    content.appendChild(choiceBtn("15\u201319 \u00E5r","15, 16, 17, 18 eller 19 \u00E5r","#f59e0b","15+",()=>advance("age","15to19"),0.12));
-    content.appendChild(choiceBtn("20 \u00E5r eller \u00E4ldre","F\u00E5r lagligt inneha alkohol","#3b82f6","20+",()=>advance("age","20plus"),0.19));
-  }
-  else if (state.step==="forbidden_area"){
-    content.appendChild(el("h2", { text:"F\u00F6rbjudet omr\u00E5de?" }));
-    content.appendChild(el("p", { class:"question-sub", text:"Befinner sig personen inom omr\u00E5de som \u00E4r f\u00F6rbjudet enligt lokal ordningsf\u00F6reskrift?" }));
-    content.appendChild(choiceBtn("Ja \u2013 inom f\u00F6rbjudet omr\u00E5de",null,"#ef4444","\u2713",()=>advance("forbidden_area","ja"),0.05));
-    content.appendChild(choiceBtn("Nej \u2013 ej f\u00F6rbjudet omr\u00E5de",null,"#64748b","\u2717",()=>advance("forbidden_area","nej"),0.12));
-  }
-  else if (state.step==="observed_drinking"){
-    content.appendChild(el("h2", { text:"Iakttagit drickande?" }));
-    content.appendChild(el("p", { class:"question-sub", text:"Har du eller kollega direkt observerat att personen f\u00F6rt\u00E4rt alkohol?" }));
-    content.appendChild(choiceBtn("Ja \u2013 iakttagit drickande",null,"#ef4444","\u2713",()=>advance("observed_drinking","ja"),0.05));
-    content.appendChild(choiceBtn("Nej \u2013 ej iakttagit",null,"#64748b","\u2717",()=>advance("observed_drinking","nej"),0.12));
-  }
-  else if (state.step==="suspects"){
-    content.appendChild(el("h2", { text:"Misst\u00E4nkta langare?" }));
-    content.appendChild(el("p", { class:"question-sub", text:"Finns det misst\u00E4nkta personer som kan ha tillhandah\u00E5llit alkoholen? P\u00E5verkar hanteringen av alkoholen." }));
-    content.appendChild(choiceBtn("Ja \u2013 misst\u00E4nkta finns","\u2192 Alkohol tas i beslag enligt rutin","#ef4444","\u2713",()=>advance("suspects","ja"),0.05));
-    content.appendChild(choiceBtn("Nej \u2013 inga misst\u00E4nkta","\u2192 Direktf\u00F6rverkande p\u00E5 plats","#64748b","\u2717",()=>advance("suspects","nej"),0.12));
-  }
-  else if (state.step==="result"){
-    const res = buildResults();
-    const hasCrime = res.brott.length>0;
-
-    const banner = el("div", { class:"banner " + (hasCrime?"crime":"ok") });
-    banner.appendChild(el("div", { class:"banner-icon " + (hasCrime?"crime":"ok"), text: hasCrime?"\u26A0\uFE0F":"\u2705" }));
-    const bt = el("div");
-    bt.appendChild(el("div", { class:"banner-title", text: hasCrime?"BROTT KONSTATERAT":"INGET BROTT" }));
-    let meta = AL.age[state.ans.age] + " \u00B7 " + AL.forbidden_area[state.ans.forbidden_area] + " \u00B7 " + AL.observed_drinking[state.ans.observed_drinking];
-    if (state.ans.suspects) meta += " \u00B7 " + AL.suspects[state.ans.suspects];
-    bt.appendChild(el("div", { class:"banner-meta", text:meta }));
-    banner.appendChild(bt);
-    content.appendChild(banner);
-
-    const c1 = catCard("brott", res.brott, 0.08); if (c1) content.appendChild(c1);
-    const c2 = catCard("fraga", res.fraga, 0.16); if (c2) content.appendChild(c2);
-    const c3 = catCard("attGora", res.attGora, 0.24); if (c3) content.appendChild(c3);
-    const c4 = catCard("attSkriva", res.attSkriva, 0.32); if (c4) content.appendChild(c4);
-
-    if (!hasCrime && state.ans.age==="20plus"){
-      const n = el("div", { class:"note" });
-      n.innerHTML = "<strong>\u{1F4A1} Notera:</strong> Personen \u00E4r 20+ \u00E5r och inget brott f\u00F6religger. Alkoholen kan inte f\u00F6rverkas. Polisen kan informera om g\u00E4llande regler. G\u00F6r alltid en helhetsbed\u00F6mning av situationen.";
-      content.appendChild(n);
-    }
-    if (state.ans.age==="under15"){
-      const n = el("div", { class:"note" });
-      n.innerHTML = "<strong>\u{1F4A1} P\u00E5minnelse:</strong> Barnet under 15 \u00E5r \u00E4r under straffbar \u00E5lder och kan inte lagf\u00F6ras. Brottet riktas mot den som tillhandah\u00E5llit alkoholen. Utred alltid k\u00E4llan.";
-      content.appendChild(n);
-    }
-
-    content.appendChild(el("button", { class:"btn-reset", onclick:reset, text:"\u21BA Ny kontroll" }));
-  }
-
-  // Legend (not on result)
-  if (state.step!=="result"){
-    const legend = el("div", { class:"legend" });
-    legend.appendChild(el("div", { class:"legend-title", text:"F\u00E4rgkod i resultatet" }));
-    const grid = el("div", { class:"legend-grid" });
-    Object.keys(CATS).forEach(k => {
-      const v = CATS[k];
-      const item = el("div", { class:"legend-item", style:`border:1px solid ${v.border};` });
-      item.appendChild(el("span", { class:"legend-icon", text:v.icon }));
-      item.appendChild(el("span", { class:"legend-label", text:v.label }));
-      grid.appendChild(item);
-    });
-    legend.appendChild(grid);
-    content.appendChild(legend);
-  }
-
-  app.appendChild(content);
+  const foot = h("footer", {}, [
+    h("p", {}, [
+      h("b", { text:"Detta är ett beslutsstöd, inte en rättskälla. " }),
+      h("span", { text:"Det ersätter varken lagtext, Polismyndighetens rutiner eller den egna rättsliga bedömningen i det enskilda fallet." })
+    ]),
+    h("p", { text:"Lagrum kontrollerade mot gällande författningstext i augusti 2026. Kommunala ordningsföreskrifter, brottskoder och ordningsbotskatalogen ändras oftare än lagtexten – verifiera dem lokalt." })
+  ]);
+  view.appendChild(foot);
 }
+
+/* ---------- Tema ---------- */
+const THEME_KEY = "ingripandestod-theme";
+function applyTheme(t){
+  if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  else document.documentElement.removeAttribute("data-theme");
+}
+try { applyTheme(localStorage.getItem(THEME_KEY)); } catch(e){}
+
+document.getElementById("btnTheme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch(e){}
+});
+
+document.getElementById("btnRefs").addEventListener("click", () => {
+  state.view = state.view === "refs" ? "wizard" : "refs";
+  render();
+  window.scrollTo({ top:0 });
+});
+
+/* ---------- Tangentbord ---------- */
+document.addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = document.activeElement && document.activeElement.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+  if (e.key === "Escape" || e.key === "Backspace"){
+    if (state.view === "refs"){ state.view = "wizard"; render(); e.preventDefault(); }
+    else if (state.hist.length && state.step !== "result"){ back(); e.preventDefault(); }
+    return;
+  }
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 9){
+    const btns = document.querySelectorAll("#view .options .opt");
+    if (btns[n-1]){ btns[n-1].click(); e.preventDefault(); }
+  }
+});
 
 render();
 </script>
